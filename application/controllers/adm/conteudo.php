@@ -41,12 +41,14 @@ class Conteudo extends CI_Controller {
         $dados['css'][] = 'fileinput.min';
         $dados['css'][] = 'jquery-ui.blue';
         $dados['css'][] = 'bootstrap-multiselect';
+        $dados['css'][] = 'bootstrap-switch';
         $dados['js'][] = 'bootstrap-multiselect';
         $dados['js'][] = 'data/jquery-ui';
         $dados['js'][] = 'plugins/jquery.validate';
         $dados['js'][] = 'upload/fileinput.min';
         $dados['js'][] = 'upload/fileinput.pt-BR';
         $dados['js'][] = 'jquery.mask.min';
+        $dados['js'][] = 'bootstrap-switch  ';
         $dados['js'][] = 'tinymce/js/tinymce/tinymce.min';
         $dados['js'][] = 'tinymce.init.min';
 
@@ -75,6 +77,7 @@ class Conteudo extends CI_Controller {
         $dados['view'] = 'adm/conteudo/editar';
         $dados['css'][] = 'jquery-ui.blue';
         $dados['css'][] = 'fileinput.min';
+        $dados['css'][] = 'bootstrap-switch';
         $dados['css'][] = 'bootstrap-multiselect';
         $dados['js'][] = 'bootstrap-multiselect';
         $dados['js'][] = 'data/jquery-ui';
@@ -82,6 +85,7 @@ class Conteudo extends CI_Controller {
         $dados['js'][] = 'plugins/jquery.validate';
         $dados['js'][] = 'upload/fileinput.min';
         $dados['js'][] = 'upload/fileinput.pt-BR';
+        $dados['js'][] = 'bootstrap-switch';
         $dados['js'][] = 'jquery.mask.min';
         $dados['js'][] = 'tinymce/js/tinymce/tinymce.min';
         $dados['js'][] = 'tinymce.init.min';

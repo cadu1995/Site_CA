@@ -34,9 +34,9 @@ echo doctype('html5');
                     <li style="float: left"><a>CA</a></li>
                     <li><a href="<?php echo base_url('home/index'); ?>">Início</a></li>
                     <li class="current"><a href="<?php echo base_url('noticias'); ?>">Notícias</a></li>
-                    <li><a href="<?php echo base_url('eventos')?>">Eventos</a></li>
-                    <li><a href="<?php echo base_url('repositorios')?>">Repositório</a></li>
-                    <li style="float: right"><a href="<?php echo base_url('adm/login')?>">Login</a></li>
+                    <li><a href="<?php echo base_url('eventos') ?>">Eventos</a></li>
+                    <li><a href="<?php echo base_url('repositorios') ?>">Repositório</a></li>
+                    <li style="float: right"><a href="<?php echo base_url('adm/login') ?>">Login</a></li>
                 </ul>
             </nav>
 
@@ -116,39 +116,21 @@ echo doctype('html5');
                                 <article class="box page-content">
 
                                     <header>
-                                        <h2>Noticias</h2>
+                                        <h2><?php echo $noticia->con_titulo;  ?></h2>
+                                        <p><?php echo $noticia->con_subtitulo;  ?></p>
+                                        <ul class="meta">
+                                            <li class="icon fa-clock-o"><?php echo $noticia->con_data;  ?></li>
+                                            <li class="icon fa-user"><?php echo $usuario->usu_nome;  ?></li>
+                                        </ul>
                                     </header>
 
-                                    <div class="row">
+                                    <section>
+                                        <span class="image featured"><img src="<?php echo base_url($noticia->con_imagem);  ?>" alt="" /></span>
+                                    </section>
 
-
-                                        <?php
-                                        
-                                        foreach ($noticias as $n):
-                                            
-                                            
-                                            
-                                            ?>
-
-
-                                            <div class="3u 12u(mobile)">
-
-                                                <!-- Feature -->
-                                                <section class="box feature">
-                                                    <a href="<?php echo base_url('noticias/ver/'.$n->con_link)?>" class="image featured"><img src="<?php echo base_url($n->con_imagem);  ?>" alt="" /></a>
-                                                    <h3><a href="<?php echo base_url('noticias/ver/'.$n->con_link)?>"><?php echo $n->con_titulo;  ?></a></h3>
-                                                    <p>
-                                                        <?php echo $n->con_subtitulo;  ?>
-                                                    </p>
-                                                </section>
-
-                                            </div>
-                                            <?php
-                                        endforeach;
-                                        ?>
-
-                                    </div>
-
+                                    <section>
+                                        <?php echo $noticia->con_descricao;  ?>
+                                    </section>
 
                                 </article>
 
@@ -189,20 +171,20 @@ echo doctype('html5');
 
         </div>
 
-<?php
-echo script_tag('assets/js/jquery.min.js', 'text/javascript');
-lnbreak();
-echo script_tag('assets/js/jquery.dropotron.min.js', 'text/javascript');
-lnbreak();
-echo script_tag('assets/js/skel.min.js', 'text/javascript');
-lnbreak();
-echo script_tag('assets/js/skel-viewport.min.js', 'text/javascript');
-lnbreak();
-echo script_tag('assets/js/util.js', 'text/javascript');
-lnbreak();
-echo script_tag('assets/js/main.js', 'text/javascript');
-lnbreak();
-?>
+        <?php
+        echo script_tag('assets/js/jquery.min.js', 'text/javascript');
+        lnbreak();
+        echo script_tag('assets/js/jquery.dropotron.min.js', 'text/javascript');
+        lnbreak();
+        echo script_tag('assets/js/skel.min.js', 'text/javascript');
+        lnbreak();
+        echo script_tag('assets/js/skel-viewport.min.js', 'text/javascript');
+        lnbreak();
+        echo script_tag('assets/js/util.js', 'text/javascript');
+        lnbreak();
+        echo script_tag('assets/js/main.js', 'text/javascript');
+        lnbreak();
+        ?>
 
     </body>
 </html>

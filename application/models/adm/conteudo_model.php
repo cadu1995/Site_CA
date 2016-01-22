@@ -136,4 +136,21 @@ class Conteudo_model extends CI_Model {
         }
         
     }
+    
+    function get_by_link($link){
+    
+        $this->db->select('*');
+        
+        $this->db->from($this->tabela);
+        
+        $this->db->where('con_link', $link);
+        
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->row(0);
+        }else{
+            return FALSE;
+        }
+    }
 }

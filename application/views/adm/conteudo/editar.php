@@ -60,6 +60,38 @@
     </div>
     
     <div class="row">
+        
+        <div class="form-group col-lg-6">
+            <?php
+            echo form_label('Sub título *');
+            echo form_input('con_subtitulo', (isset($conteudo->con_subtitulo)? $conteudo->con_subtitulo: set_value('Sub título')), 'id="con_subtitulo" class="form-control" required="TRUE"');
+            echo form_error('con_subtitulo');
+            ?>
+        </div>
+        
+        
+        <div class="form-group col-lg-3">
+            <?php
+                        echo br(1);
+            if(isset($conteudo)){
+                if($conteudo->con_destaque == 1){
+                    $checked = true;
+                }else {
+                    $checked = false;
+                }
+            }else{
+                $checked = false;
+            }
+            
+            echo form_label('Destaque &nbsp');
+
+            echo form_checkbox('con_destaque', '',$checked);
+            echo form_error('con_destaque');
+            ?>
+        </div>
+    </div>
+    
+    <div class="row">
         <div class="form-group col-lg-6">
             <?php 
             echo form_label('Autor');

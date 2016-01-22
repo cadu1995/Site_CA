@@ -32,9 +32,4 @@ class Home extends CI_Controller {
         // $this->load->view('slide');
          
     }
-    
-    public function noticias(){
-        
-        $this->load->view('noticias');
-    }
 }

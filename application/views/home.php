@@ -39,10 +39,10 @@ echo doctype('html5');
                 <ul>
                     <li style="float: left"><a>CA</a></li>
                     <li class="current"><a href="<?php echo base_url('home'); ?>">Início</a></li>
-                    <li><a href="<?php echo base_url('home/noticias'); ?>">Notícias</a></li>
-                    <li><a href="right-sidebar.html">Eventos</a></li>
-                    <li><a href="right-sidebar.html">Repositório</a></li>
-                    <li style="float: right"><a href="no-sidebar.html">Login</a></li>
+                    <li><a href="<?php echo base_url('noticias'); ?>">Notícias</a></li>
+                    <li><a href="<?php echo base_url('eventos')?>">Eventos</a></li>
+                    <li><a href="<?php echo base_url('repositorios')?>">Repositório</a></li>
+                    <li style="float: right"><a href="<?php echo base_url('adm/login')?>">Login</a></li>
                 </ul>
             </nav>
 
@@ -101,7 +101,7 @@ endfor;
 
                                         <div class="12u" >
                                             <ul class="actions">
-                                                <li><a href="#" class="button alt big">Ver mais</a></li>
+                                                <li><a href="<?php echo base_url('noticias'); ?>" class="button alt big">Ver mais</a></li>
                                             </ul>
                                         </div>
 
