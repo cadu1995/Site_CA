@@ -45,22 +45,25 @@
             };
             
             $this->table->set_heading('Id', 'Título', 'Data', 'Ações');
+            
+            if(isset($conteudo) && !empty($conteudo)){
 
-            foreach ($conteudo as $conte) {
-                
-                list($ano, $mes, $dia) = explode('-', $conte->con_data);
-        
-                $conte->con_data = $dia.'/'.$mes.'/'.$ano;
+                foreach ($conteudo as $conte) {
 
-                $link_editar  = base_url('adm/conteudo/editar/' . $conte->con_id);
-                
-                $acoes  = '<a href="' . $link_editar . '" class="btn btn-info btn-sm">Editar</a>&nbsp;';
-                //$acoes .= '<a href="#" data-id="' . $conte->con_id . '" data-toggle="modal" data-target="#modal_confirmar_remocao" class="btn btn-danger btn-sm btn_remover">Remover</a>';
-                $acoes .= '<a href="' . base_url('adm/conteudo/remover/'.$conte->con_id) . '" class="btn btn-danger btn-sm btn_remover">Remover</a>';
+                    list($ano, $mes, $dia) = explode('-', $conte->con_data);
 
-                $this->table->add_row(
-                        $conte->con_id, $conte->con_titulo, $conte->con_data, $acoes
-                );
+                    $conte->con_data = $dia.'/'.$mes.'/'.$ano;
+
+                    $link_editar  = base_url('adm/conteudo/editar/' . $conte->con_id);
+
+                    $acoes  = '<a href="' . $link_editar . '" class="btn btn-info btn-sm">Editar</a>&nbsp;';
+                    //$acoes .= '<a href="#" data-id="' . $conte->con_id . '" data-toggle="modal" data-target="#modal_confirmar_remocao" class="btn btn-danger btn-sm btn_remover">Remover</a>';
+                    $acoes .= '<a href="' . base_url('adm/conteudo/remover/'.$conte->con_id) . '" class="btn btn-danger btn-sm btn_remover">Remover</a>';
+
+                    $this->table->add_row(
+                            $conte->con_id, $conte->con_titulo, $conte->con_data, $acoes
+                    );
+                }
             }
 
             $this->table->set_template(array(

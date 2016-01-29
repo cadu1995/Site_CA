@@ -54,7 +54,7 @@ echo doctype('html5');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">CA Alan Turing</a>
+                <a class="navbar-brand" href="<?php echo base_url('adm/dashboard'); ?>">CA Alan Turing</a>
             </div>
             <!-- /.navbar-header -->
 

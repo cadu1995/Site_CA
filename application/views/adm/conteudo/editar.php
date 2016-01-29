@@ -16,7 +16,7 @@
 </div>
 <div class="col-lg-12">
     <?php
-    echo form_open(base_url('adm/conteudo/salvar'), 'enctype="multipart/form-data" id="editar_conteudo"'); 
+    echo form_open_multipart(base_url('adm/conteudo/salvar'), 'id="editar_conteudo"'); 
         
     $conteudo_id = (isset($conteudo->con_id))? $conteudo->con_id: set_value('id');
     $conteudo_id = ($conteudo_id === '' && isset($id))? $id: $conteudo_id; 
@@ -135,16 +135,18 @@
             foreach($areas_conhecimento as $areas){
                 echo '<optgroup label="'.$areas->are_nome.'">';
                 foreach($areas->sub_areas as $sub){
-                    if(!empty($conteudo->sub_areas)){
-                        $selected =  '';
-                        foreach($conteudo->sub_areas as $csa){
-                            if($sub->sub_area_id == $csa->sub_area_id){
-                                
-                                $selected =  'selected="selected"';
-                            }
-                        }
-                    }else $selected =  '';
-                    echo '<option value="'.$sub->sub_area_id.'" '.$selected.'>'.$sub->sub_area_titulo.'</option>';
+                    if (!empty($conteudo->sub_areas)) {
+            $selected = '';
+            foreach ($conteudo->sub_areas as $csa) {
+                if ($sub->sub_area_id == $csa->sub_area_id) {
+
+                    $selected = 'selected="selected"';
+                }
+            }
+        } else {
+            $selected = '';
+        }
+        echo '<option value="'.$sub->sub_area_id.'" '.$selected.'>'.$sub->sub_area_titulo.'</option>';
                 }
             }
             echo '</select>';
@@ -167,10 +169,10 @@
     <div class="row" style="padding-top: 80px">
         <div class="form-group col-lg-6">
             <?php 
-            
+             $redirect = 'class="btn btn-danger btn_cancelar" onclick="location.href=\''.base_url('adm/conteudo/').'\'"';
             echo form_submit('salvar','Salvar', 'class="btn btn-primary"');
 
-            echo nbs(2) . form_button('cancelar','Cancelar', ' class="btn btn-danger btn_cancelar" ');
+            echo nbs(2) . form_button('cancelar','Cancelar', $redirect);
             ?>
         </div>
     </div>

@@ -36,6 +36,7 @@ class Conteudo extends CI_Controller {
     function criar() {
         $dados['tipo_conteudo'] = $this->tipo_conteudo_model->get_all();
         $dados['areas_conhecimento'] = $this->sub_areas_conhecimento_model->get_sub_areas_group_by_areas();
+        
         $dados['titulo'] = 'Cadastrar conteúdo';
         $dados['view'] = 'adm/conteudo/editar';
         $dados['css'][] = 'fileinput.min';
@@ -48,7 +49,7 @@ class Conteudo extends CI_Controller {
         $dados['js'][] = 'upload/fileinput.min';
         $dados['js'][] = 'upload/fileinput.pt-BR';
         $dados['js'][] = 'jquery.mask.min';
-        $dados['js'][] = 'bootstrap-switch  ';
+        $dados['js'][] = 'bootstrap-switch';
         $dados['js'][] = 'tinymce/js/tinymce/tinymce.min';
         $dados['js'][] = 'tinymce.init.min';
 
@@ -56,23 +57,28 @@ class Conteudo extends CI_Controller {
     }
 
     function editar($id = NULL) {
-
-        if ($id == NULL)
+        //Verifica se a função recebeu parâmetros
+        if ($id === \NULL) {
             redirect('adm/conteudo', 'refresh');
-
+        }
+        
+        //Pega todo o conteúdo
         $conteudo = $this->conteudo_model->get_by_id($id);
-
+        
+        //Modifica a exibição das datas
         list($ano, $mes, $dia) = explode('-', $conteudo->con_data);
-
         $conteudo->con_data = $dia . $mes . $ano;
+        
+        //Carrega as sub-áreas do conteúdo
         $conteudo->sub_areas = $this->conteudo_sub_area_model->get_sub_areas_by_conteudo_id($id);
-
+        
         $dados['tipo_conteudo'] = $this->tipo_conteudo_model->get_all();
         $dados['areas_conhecimento'] = $this->sub_areas_conhecimento_model->get_sub_areas_group_by_areas();
         $dados['conteudo'] = $conteudo;
 
         $dados['usuario'] = $this->usuario_model->get_by_id($conteudo->usuarios_usu_id);
 
+        //Informações da página, css e js necessários
         $dados['titulo'] = 'Editar conteúdo';
         $dados['view'] = 'adm/conteudo/editar';
         $dados['css'][] = 'jquery-ui.blue';
@@ -81,7 +87,7 @@ class Conteudo extends CI_Controller {
         $dados['css'][] = 'bootstrap-multiselect';
         $dados['js'][] = 'bootstrap-multiselect';
         $dados['js'][] = 'data/jquery-ui';
-        $dados['js'][] = 'data/jquery-1.10.2';
+        //$dados['js'][] = 'data/jquery-1.10.2';
         $dados['js'][] = 'plugins/jquery.validate';
         $dados['js'][] = 'upload/fileinput.min';
         $dados['js'][] = 'upload/fileinput.pt-BR';
@@ -89,94 +95,75 @@ class Conteudo extends CI_Controller {
         $dados['js'][] = 'jquery.mask.min';
         $dados['js'][] = 'tinymce/js/tinymce/tinymce.min';
         $dados['js'][] = 'tinymce.init.min';
-
+        
+        //Exibe a view
         $this->load->view('/layout', $dados);
     }
 
     function salvar() {
-
         $conteudo = new stdClass();
+        //Pega o título do conteúdo para usar na criação do link e do diretório
+        $titulo = $this->input->post('con_titulo');
+        //Cria o link do conteúdo com base no título
+        $link = $this->slug($titulo);
 
-        $this->form_validation->set_rules('con_data', 'data', 'required');
-        $this->form_validation->set_rules('con_titulo', 'titulo', 'required|min_length[5]|max_length[255]');
-        $this->form_validation->set_rules('tipo_conteudo_tp_con_id', 'categoria', 'required');
-        $this->form_validation->set_rules('con_descricao', 'conteudo', 'required');
-
-        // Seta o html das mensagens de validacao
-        $this->form_validation->set_error_delimiters('<label class="control-label" for="inputError">', '</label>');
-
-
-
+        //Pega o id separado para saber se é edição ou criação
         $id = $this->input->post('con_id');
-        $conteudo->con_titulo = $this->input->post('con_titulo');
-        $conteudo->con_descricao = $this->input->post('con_descricao');
-        $conteudo->con_data = $this->input->post('con_data');
-        $conteudo->con_data_registro = unix_to_human(now(), TRUE, 'eu');
+        
+        $conteudo->con_titulo              = $titulo;
+        $conteudo->con_subtitulo           = $this->input->post('con_subtitulo');
+        $conteudo->con_link                = $link;
+        $conteudo->con_destaque            = $this->input->post('con_destaque');
+        $conteudo->con_descricao           = $this->input->post('con_descricao');
+        $conteudo->con_data                = $this->input->post('con_data');
+        $conteudo->con_data_registro       = unix_to_human(now(), TRUE, 'eu');
         $conteudo->tipo_conteudo_tp_con_id = $this->input->post('tipo_conteudo_tp_con_id');
-        $conteudo->usuarios_usu_id = $this->session->userdata('usuario_id');
-        $sub_areas = $this->input->post('sub_areas');
-
+        $conteudo->usuarios_usu_id         = $this->session->userdata('usuario_id');
+        $sub_areas                         = $this->input->post('sub_areas');
+        //Arruma a data na forma do banco
         list($dia, $mes, $ano) = explode('/', $conteudo->con_data);
         $conteudo->con_data = $ano . $mes . $dia;
-
+        
+//        echo '<pre>';
+//        print_r($conteudo);
+//        die('</pre>');
+        
+        //Se o id for vazio, é criação de conteúdo
         if (empty($id)) {
             //Path para o diretório de imagens do conteudo
             //url-title cria um nome para a pasta do conteúdo, sem caracteres especiais
-            $diretorio = 'img/conteudo/' . url_title($conteudo->con_titulo, 'dash', true);
+            if(!empty($_FILES['con_imagem']['tmp_name'])){
+                $diretorio = 'img/conteudo/' . url_title($conteudo->con_titulo, 'dash', true);
 
-            //Verifica se o diretório não existe e o cria
-            if (!is_dir('./' . $diretorio)) {
-                mkdir('./' . $diretorio, 0777, true);
+                $conteudo->con_imagem = $this->upload($diretorio);
             }
-
-            //Configurações para o upload
-            $config['upload_path'] = './' . $diretorio;
-            $config['allowed_types'] = 'gif|jpg|png';
-            $config['max_size'] = '2500';
-            $config['max_width'] = '2000';
-            $config['max_height'] = '1500';
-
-            $this->upload->initialize($config);
-
-            //Verifica se o upload deu certo
-            if (!$this->upload->do_upload('con_imagem')) {
-                $error = array('error' => $this->upload->display_errors());
-                //Validação
-            } else {
-                //Pega o path completo até a imagem e salva
-                $img_path = $this->upload->data();
-                $conteudo->con_imagem = $diretorio . '/' . $img_path['file_name'];
-            }
-
-            $upimg['resize'] = array(
-                'source_image' => $conteudo->con_imagem,
-                'image_library' => 'gd2',
-                'maintain_ratio' => FALSE,
-                'width' => 1366,
-                'height' => 768,
-            );
-
-            $this->load->library('image_lib', $upimg['resize']);
-
-            if (!$this->image_lib->resize()) {
-                echo '<pre>';
-                print_r($this->image_lib->display_errors());
-                die('</pre>');
-            }
-
+            
+            //Cria o novo conteúdo
             $resultado = $this->conteudo_model->criar($conteudo);
+            //Verifica se foi(ram) selecionada(s) áreas de conhecimento e as adicionam
             if ($sub_areas) {
                 $resultado = $this->conteudo_sub_area_model->insert_update_conteudo_areas($sub_areas, $resultado);
             }
+            
         } else {
+            //Atualização do conteúdo
+            
+            //Path para o diretório de imagens do conteudo
+            //url-title cria um nome para a pasta do conteúdo, sem caracteres especiais
+            if(!empty($_FILES['con_imagem']['tmp_name'])){
+                $diretorio = 'img/conteudo/' . url_title($conteudo->con_titulo, 'dash', true);
 
+                $conteudo->con_imagem = $this->upload($diretorio);
+            }
+            
             $conteudo->con_id = $id;
             $resultado = $this->conteudo_model->atualizar($conteudo);
             if ($sub_areas) {
                 $resultado = $this->conteudo_sub_area_model->insert_update_conteudo_areas($sub_areas, $id);
             }
         }
-
+        
+        //Verificação
         if ($resultado) {
 
             if (empty($id)) {
@@ -189,38 +176,97 @@ class Conteudo extends CI_Controller {
         } else {
             $mensagem = array('msg' => 'erro', 'tipo' => 'danger');
         }
-
+        
+        //Seta flash data para exibir o status da operação
         $this->session->set_flashdata('msg', $mensagem);
 
         redirect('adm/conteudo', 'refresh');
     }
 
     function remover($id = NULL) {
+        //Verifica se a função recebeu parâmetros
         if ($id === \NULL) {
             redirect('adm/conteudo', 'refresh');
         }
-
+        
+        //Remove as chves de subáreas
         $this->conteudo_sub_area_model->remover($id);
-
+        //Remove o conteúdo
         $resultado = $this->conteudo_model->remover($id);
-
+        
+        
+        //Verificação
         if ($resultado) {
 
             $mensagem = array('msg' => 'delete-con-ok', 'tipo' => 'success');
         } else {
             $mensagem = array('msg' => 'erro', 'tipo' => 'danger');
         }
-
+        
+        //Seta flash data para exibir o status da operação
         $this->session->set_flashdata('msg', $mensagem);
 
         redirect('adm/conteudo', 'refresh');
     }
+    
+    
+    
+    private function slug($title){
+        $url = $url1 = url_title($title, '_', TRUE);
+        $cont = 1;
+        if($this->conteudo_model->link($url1) != 0){
+            $url1 = $url.$cont;
+            while($this->conteudo_model->link($url1) != 0){
+                $url1 = $url.$cont;
+                $cont++;
+            }
+            $cont--;
+        }else{
+           return $url; 
+        }
+        return $url.$cont;
+    }
+    
+    private function upload($diretorio){
+        $path = "";
 
+        //Verifica se o diretório não existe e o cria
+        if (!is_dir('./' . $diretorio)) {
+            mkdir('./' . $diretorio, 0777, true);
+        }
+
+        //Configurações para o upload
+        $config['upload_path'] = './' . $diretorio;
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = '0';
+        $config['max_width'] = '0';
+        $config['max_height'] = '0';
+
+        $this->upload->initialize($config);
+
+        //Verifica se o upload deu certo
+        if (!$this->upload->do_upload('con_imagem')) {
+            $error = array('error' => $this->upload->display_errors());
+            //Validação
+        } else {
+            //Pega o path completo até a imagem e salva
+            $img_path = $this->upload->data();
+            $path = $diretorio . '/' . $img_path['file_name'];
+        }
+        
+        //Parâmetros para redimensionar a imagem do post
+        $upimg['resize'] = array(
+            'source_image' => $path,
+            'image_library' => 'gd2',
+            'maintain_ratio' => FALSE,
+            'width' => 1366,
+            'height' => 768,
+        );
+
+        //Carrega a biblioteca de imagem e aplica o redimensionamento
+        $this->load->library('image_lib', $upimg['resize']);
+        $this->image_lib->resize();
+        
+        return $path;
+    }
 }
-
-/*
- *echo '<pre>';
-        print_r($conteudo);
-        echo '</pre>';
-        die();
-*/

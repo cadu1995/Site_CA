@@ -45,17 +45,19 @@
             
 
             $this->table->set_heading('Id', 'Nome', 'E-mail', 'Status', 'Ações');
+            
+            if(isset($usuarios) && !empty($usuarios)){
+                foreach ($usuarios as $u) {                
 
-            foreach ($usuarios as $u) {                
+                    $link_editar  = base_url('adm/usuarios/editar/' . $u->usu_id);
 
-                $link_editar  = base_url('adm/usuarios/editar/' . $u->usu_id);
-                
-                $acoes  = '<a href="' . $link_editar . '" class="btn btn-info btn-sm">Editar</a>&nbsp;';
-                $acoes .= '<a href="#" data-id="' . $u->usu_id . '" data-toggle="modal" data-target="#modal_confirmar_remocao" class="btn btn-danger btn-sm btn_remover">Remover</a>';
-                
-                $this->table->add_row(
-                        $u->usu_id, $u->usu_nome, $u->usu_email, formata_status($u->usu_status), $acoes
-                );
+                    $acoes  = '<a href="' . $link_editar . '" class="btn btn-info btn-sm">Editar</a>&nbsp;';
+                    $acoes .= '<a href="#" data-id="' . $u->usu_id . '" data-toggle="modal" data-target="#modal_confirmar_remocao" class="btn btn-danger btn-sm btn_remover">Remover</a>';
+
+                    $this->table->add_row(
+                            $u->usu_id, $u->usu_nome, $u->usu_email, formata_status($u->usu_status), $acoes
+                    );
+                }
             }
 
             $this->table->set_template(array(

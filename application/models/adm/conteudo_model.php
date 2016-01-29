@@ -153,4 +153,123 @@ class Conteudo_model extends CI_Model {
             return FALSE;
         }
     }
+    
+    function get_by_categoria($categoria){
+    
+        $this->db->select('*');
+        
+        $this->db->from($this->tabela);
+        
+        $this->db->where('con_link', $categoria);
+        
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->row(0);
+        }else{
+            return FALSE;
+        }
+    }
+    
+    function link($link){
+        $this->db->select('COUNT(con_link) as cnt');
+        
+        $this->db->from($this->tabela);
+        
+        $this->db->where('con_link', $link);
+        
+        $result = $this->db->get();
+        
+        $ret = $result->row(0);
+        
+        return (int)$ret->cnt;
+    }
+    
+    function get_noticias_destaque(){
+        
+        $this->db->select('*');
+        
+        $this->db->from($this->tabela);
+        
+        $this->db->where('tipo_conteudo_tp_con_id', 1);
+        
+        $this->db->where('con_destaque', 1);
+        
+        $this->db->order_by('con_data_registro', 'desc');
+        
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->result();
+        }else{
+            return FALSE;
+        }
+        
+    }
+    
+    function get_eventos_destaque(){
+        
+        $this->db->select('*');
+        
+        $this->db->from($this->tabela);
+        
+        $this->db->where('tipo_conteudo_tp_con_id', 2);
+        
+        $this->db->where('con_destaque', 1);
+        
+        $this->db->order_by('con_data_registro', 'desc');
+        
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->result();
+        }else{
+            return FALSE;
+        }
+        
+    }
+    
+    function search($keyword, $id)
+    {
+        $this->db->from($this->tabela);
+        
+        $this->db->like('con_titulo', $keyword);
+        
+        $this->db->where('tipo_conteudo_tp_con_id', $id);
+        
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->result();
+        }else{
+            return FALSE;
+        }
+    }
+    
+    public function noticias_areas($area){
+        
+    $this->load->model('adm/areas_conhecimento_model');
+    $areas = $this->areas_conhecimento_model->get_all();
+
+    foreach($areas as $area){
+        $aux = new stdClass();
+        $aux->are_id = $area->are_id;
+        $aux->are_nome = $area->are_nome;
+        $aux->are_numero = $area->are_numero;
+
+        $this->db->select('sub_area_id, sub_area_titulo, sub_area_numero');
+        $this->db->from($this->tabela);
+        $this->db->join('areas_conhecimento', 'are_id = areas_conhecimento_are_id');
+        $this->db->where('areas_conhecimento_are_id = '.$area->are_id);
+
+        $result = $this->db->get();
+
+        $aux->sub_areas = $result->result();
+
+        $retorno->sub_areas[] = $aux;
+    }
+
+    return $retorno;
+    }
+    
 }

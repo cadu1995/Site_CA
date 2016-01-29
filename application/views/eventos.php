@@ -33,8 +33,8 @@ echo doctype('html5');
                 <ul>
                     <li style="float: left"><a>CA</a></li>
                     <li><a href="<?php echo base_url('home/index'); ?>">Início</a></li>
-                    <li class="current"><a href="<?php echo base_url('noticias'); ?>">Notícias</a></li>
-                    <li><a href="<?php echo base_url('eventos')?>">Eventos</a></li>
+                    <li><a href="<?php echo base_url('noticias'); ?>">Notícias</a></li>
+                    <li class="current"><a href="<?php echo base_url('eventos')?>">Eventos</a></li>
                     <li><a href="<?php echo base_url('repositorios')?>">Repositório</a></li>
                     <li style="float: right"><a href="<?php echo base_url('adm/login')?>">Login</a></li>
                 </ul>
@@ -51,13 +51,13 @@ echo doctype('html5');
                                 
                                 <section>
                                     <?php 
-                                    echo form_open(base_url('noticias/pesquisa'));
+                                    echo form_open(base_url('eventos/pesquisa'));
                                     echo form_input('not_search', '', 'id="not_search"');
                                     echo form_submit('search','Pesquisar', 'class="button alt"');
                                     echo form_close();
                                     ?>
                                 </section>
-                                
+
                                 <!-- Destaques -->
                                 <section>
                                     <h2 class="major"><span>Destaques</span></h2>
@@ -67,7 +67,7 @@ echo doctype('html5');
                                         ?>
                                         <li>
                                             <article class="box post-summary">
-                                                <h3><a href="<?php echo base_url('noticias/ver/'.$d->con_link)?>"><?php echo $d->con_titulo;  ?></a></h3>
+                                                <h3><a href="<?php echo base_url('eventos/ver/'.$d->con_link)?>"><?php echo $d->con_titulo;  ?></a></h3>
                                                 <ul class="meta">
                                                     <li class="icon fa-clock-o"><?php echo $d->con_data;  ?></li>
                                                 </ul>
@@ -93,32 +93,23 @@ echo doctype('html5');
                                     </header>
 
                                     <div class="row">
-
-
                                         <?php
-                                        
-                                        if(!empty($noticias)):
-                                        
-                                            foreach ($noticias as $n):
+                                        if(isset($eventos) && !empty($eventos)):
+                                            foreach ($eventos as $ev):
                                             ?>
-
-
                                             <div class="3u 12u(mobile)">
-
-                                                <!-- Feature -->
                                                 <section class="box feature">
-                                                    <a href="<?php echo base_url('noticias/ver/'.$n->con_link)?>" class="image featured"><img src="<?php echo base_url($n->con_imagem);  ?>" alt="" /></a>
-                                                    <h3><a href="<?php echo base_url('noticias/ver/'.$n->con_link)?>"><?php echo $n->con_titulo;  ?></a></h3>
+                                                    <a href="<?php echo base_url('eventos/ver/'.$ev->con_link)?>" class="image featured"><img src="<?php echo base_url($ev->con_imagem);  ?>" alt="" /></a>
+                                                    <h3><a href="<?php echo base_url('eventos/ver/'.$ev->con_link)?>"><?php echo $ev->con_titulo;  ?></a></h3>
                                                     <p>
-                                                        <?php echo $n->con_subtitulo;  ?>
+                                                        <?php echo $ev->con_subtitulo;  ?>
                                                     </p>
                                                 </section>
-
                                             </div>
                                             <?php
                                             endforeach;
                                         else:
-                                            echo '<p>Não há notícias para exibir.</p>';
+                                            echo '<p>Não há eventos para exibir.</p>';
                                         endif;
                                         ?>
 
@@ -144,10 +135,10 @@ echo doctype('html5');
                             <h2 class="major"><span>Contato</span></h2>
                             <ul class="contact">
                                 <li><a class="icon fa-facebook" href="https://www.facebook.com/ca.comp.muz" target="_blank"><span class="label">Facebook</span></a></li>
-                                <li><a class="icon fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-                                <li><a class="icon fa-instagram" href="#"><span class="label">Instagram</span></a></li>
-                                <li><a class="icon fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
-                                <li><a class="icon fa-google-plus" href="https://plus.google.com/u/0/112967438506633495744"><span class="label">Google+</span></a></li>
+                                <li><a class="icon fa-twitter" href="#" target="_blank"><span class="label">Twitter</span></a></li>
+                                <li><a class="icon fa-instagram" href="#" target="_blank"><span class="label">Instagram</span></a></li>
+                                <li><a class="icon fa-dribbble" href="#" target="_blank"><span class="label">Dribbble</span></a></li>
+                                <li><a class="icon fa-google-plus" href="https://plus.google.com/u/0/112967438506633495744" target="_blank"><span class="label">Google+</span></a></li>
                             </ul>
                         </section>
 
