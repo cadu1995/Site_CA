@@ -54,7 +54,7 @@ echo doctype('html5');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url('adm/dashboard'); ?>">CA Alan Turing</a>
+                <a class="navbar-brand" href="<?php echo base_url(); ?>">CA Alan Turing</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -69,7 +69,7 @@ echo doctype('html5');
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo nbs(1) . $user;?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="minha_conta"><i class="fa fa-fw fa-user"></i> Minha conta</a>
+                            <a href="<?php echo base_url('adm/minha_conta'); ?>"><i class="fa fa-fw fa-user"></i> Minha conta</a>
                         </li>
                         <li class="divider"></li>
                         <li>

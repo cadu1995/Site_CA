@@ -75,7 +75,8 @@ class Repositorios extends CI_Controller{
         $repositorio->rep_descricao       = $this->input->post('descricao');
         $repositorio->rep_autor           = $this->input->post('autor');
         $repositorio->rep_autor_email     = $this->input->post('autor_email');
-        $repositorio->rep_data            = $this->input->post('data');    
+        $repositorio->rep_data            = $this->input->post('data');
+        $repositorio->rep_link            = $this->slug($this->input->post('nome'));
         
         $repositorio->orientadores_ori_id = $this->input->post('orientadores_ori_id');
         $repositorio->usuarios_usu_id      = $this->input->post('usuarios_usu_id');
@@ -328,5 +329,21 @@ class Repositorios extends CI_Controller{
            
             // Redireciona o usuario para a tela de gerenciamento
             redirect('adm/repositorios', 'refresh');
-        }
     }
+    
+    private function slug($title){
+        $url = $url1 = url_title($title, '_', TRUE);
+        $cont = 1;
+        if($this->repositorio_model->link($url1) != 0){
+            $url1 = $url.$cont;
+            while($this->repositorio_model->link($url1) != 0){
+                $url1 = $url.$cont;
+                $cont++;
+            }
+            $cont--;
+        }else{
+           return $url; 
+        }
+        return $url.$cont;
+    }
+}

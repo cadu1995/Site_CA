@@ -76,7 +76,7 @@ class Orientador_model extends CI_Model {
         $this->db->where('ori_id', (int)$id);
         
         $this->db->delete($this->tabela);
-        die();
+
         return (bool)$this->db->affected_rows();
     
     }

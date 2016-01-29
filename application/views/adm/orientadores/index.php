@@ -31,8 +31,8 @@
 
                     $link_editar  = base_url('adm/orientadores/editar/' . $o->ori_id);
 
-                    $acoes  = '<a href="' . $link_editar . '" class="btn btn-info btn-sm">Editar</a>&nbsp;';
-                    $acoes .= '<a href="#" data-id="' . $o->ori_id . '" data-toggle="modal" data-target="#modal_confirmar_remocao" class="btn btn-danger btn-sm btn_remover">Remover</a>';
+                    $acoes  = '<a href="'.$link_editar.'" class="btn btn-info btn-sm">Editar</a>&nbsp;';
+                    $acoes .= '<a href="'.base_url('adm/orientadores/remover/').'/'.$o->ori_id.'" data-id="' . $o->ori_id . '" class="btn btn-danger btn-sm btn_remover">Remover</a>';
 
                     $this->table->add_row(
                             $o->ori_id, $o->ori_nome, $o->ori_email, $acoes

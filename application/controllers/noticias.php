@@ -49,7 +49,7 @@ class Noticias extends CI_Controller{
             redirect('noticias', 'refresh');
         }
         
-        $data['noticias'] = $this->conteudo_model->search($keyword);
+        $data['noticias'] = $this->conteudo_model->search($keyword, 1);
         $data['titulo'] = 'Pesquisa';
         $data['destaques'] = $this->conteudo_model->get_noticias_destaque();
         $this->load->view('noticias',$data);

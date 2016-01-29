@@ -46,7 +46,7 @@
         <div class="form-group col-lg-6">
             <?php 
             echo form_label('E-mail *');
-            echo form_input('email',(isset($orientador->ori_email)? $orientador->ori_email: set_value('email')), 'class="form-control " id="email"');
+            echo form_input('email',(isset($orientador->ori_email)? $orientador->ori_email: set_value('email')), 'class="form-control " id="email" required="TRUE"');
             echo form_error('email');
             ?>
         </div>

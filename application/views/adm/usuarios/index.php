@@ -52,7 +52,7 @@
                     $link_editar  = base_url('adm/usuarios/editar/' . $u->usu_id);
 
                     $acoes  = '<a href="' . $link_editar . '" class="btn btn-info btn-sm">Editar</a>&nbsp;';
-                    $acoes .= '<a href="#" data-id="' . $u->usu_id . '" data-toggle="modal" data-target="#modal_confirmar_remocao" class="btn btn-danger btn-sm btn_remover">Remover</a>';
+                    $acoes .= '<a href="'.base_url('adm/usuarios/remover/'.$u->usu_id).'" data-id="' . $u->usu_id . '" class="btn btn-danger btn-sm btn_remover">Remover</a>';
 
                     $this->table->add_row(
                             $u->usu_id, $u->usu_nome, $u->usu_email, formata_status($u->usu_status), $acoes

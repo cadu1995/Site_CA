@@ -18,7 +18,9 @@
 <div class="row col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading">
+            <?php if($this->session->userdata('grupos') == 1): ?>
             <a class="btn btn-primary" href="<?php echo base_url('adm/financas/cadastrar'); ?>">Cadastrar</a>
+            <?php endif; ?>
         </div> 
         <div class="panel-body">
 
@@ -26,8 +28,11 @@
             
        
             
-
-             $this->table->set_heading('Id', 'Descrição', 'Tipo', 'Valor', 'Ações');
+            if($this->session->userdata('grupos') == 1){
+                $this->table->set_heading('Id', 'Descrição', 'Tipo', 'Valor', 'Ações');
+            }else{
+                $this->table->set_heading('Id', 'Descrição', 'Tipo', 'Valor');
+            }
              
             if(isset($financas) && !empty($financas)){
                 foreach ($financas as $u) {                
@@ -35,13 +40,17 @@
                     $link_editar  = base_url('adm/financas/editar/' . $u->fin_id);
 
                     $acoes  = '<a href="' . $link_editar . '" class="btn btn-info btn-sm">Editar</a>&nbsp;';
-    //                $acoes .= '<a href="#" data-id="' . $u->fin_id . '" data-toggle="modal" data-target="#modal_confirmar_remocao" class="btn btn-danger btn-sm btn_remover">Remover</a>';
-                    //$acoes .= '<a class="btn btn-danger btn-sm" href="javascript:func()" onclick="conf_excluir('.$u->fin_id.')">Remover</a>';
                     $acoes .= '<a href="' . base_url('adm/financas/remover/'.$u->fin_id) . '" class="btn btn-danger btn-sm btn_remover">Remover</a>';
-
-                    $this->table->add_row(
-                            $u->fin_id, $u->fin_descricao, $u->fin_tipo, $u->fin_valor, $acoes
-                    );
+                    
+                     if($this->session->userdata('grupos') == 1){
+                        $this->table->add_row(
+                                $u->fin_id, $u->fin_descricao, $u->fin_tipo, $u->fin_valor, $acoes
+                        );
+                     }else{
+                         $this->table->add_row(
+                                $u->fin_id, $u->fin_descricao, $u->fin_tipo, $u->fin_valor
+                        );
+                     }
                 }
             }
 

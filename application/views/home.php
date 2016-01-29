@@ -42,7 +42,19 @@ echo doctype('html5');
                     <li><a href="<?php echo base_url('noticias'); ?>">Notícias</a></li>
                     <li><a href="<?php echo base_url('eventos')?>">Eventos</a></li>
                     <li><a href="<?php echo base_url('repositorios')?>">Repositório</a></li>
+                    <?php
+                    $id = $this->session->userdata('usuario_id');
+                    
+                    if($id > 0):
+                        ?>
+                        <li style="float: right"><a href="<?php echo base_url('adm/dashboard')?>">Acessar</a></li>
+                    <?php
+                        else:
+                    ?>
                     <li style="float: right"><a href="<?php echo base_url('adm/login')?>">Login</a></li>
+                    <?php
+                        endif;
+                    ?>
                 </ul>
             </nav>
 
@@ -54,7 +66,7 @@ echo doctype('html5');
                         foreach ($slide as $s):
                             ?>
                             <li>
-                                <a href="<?php echo base_url((1 == $s->tipo_conteudo_tp_con_id) ? 'noticias/ver/' : 'eventos/ver/'.$s->con_link); ?>" target="_blank">
+                                <a href="<?php echo base_url(((1 == $s->tipo_conteudo_tp_con_id) ? 'noticias/ver/' : 'eventos/ver/').$s->con_link); ?>" target="_blank">
                                 <img src="<?php echo base_url($s->con_imagem); ?>" />
                                 <p class="flex-caption"><?php echo $s->con_titulo; ?></p>
                                 </a>
@@ -79,7 +91,14 @@ echo doctype('html5');
                                 <div>
                                     <div class="row">
                                         <?php
-                                        for ($i = 0; $i < 4; $i++):
+                                        
+                                        if(sizeof($noticias) > 5){
+                                            $count = 5;
+                                        }else{
+                                            $count = sizeof($noticias);
+                                        }
+                                        
+                                        for ($i = 0; $i < $count; $i++):
                                             ?>
                                             <div class="3u 12u(mobile)">
 
@@ -113,7 +132,14 @@ echo doctype('html5');
                                 <div>
                                     <div class="row">
                                         <?php
-                                        for ($i = 0; $i < 4; $i++):
+                                        
+                                        if(sizeof($eventos) > 4){
+                                            $count = 4;
+                                        }else{
+                                            $count = sizeof($eventos);
+                                        }
+                                        
+                                        for ($i = 0; $i < $count; $i++):
                                             ?>
                                             <div class="3u 12u(mobile)">
 
@@ -158,9 +184,9 @@ echo doctype('html5');
                             <h2 class="major"><span>Contato</span></h2>
                             <ul class="contact">
                                 <li><a class="icon fa-facebook" href="https://www.facebook.com/ca.comp.muz"  target="_blank"><span class="label">Facebook</span></a></li>
-                                <li><a class="icon fa-twitter" href="#"  target="_blank"><span class="label">Twitter</span></a></li>
+<!--                                <li><a class="icon fa-twitter" href="#"  target="_blank"><span class="label">Twitter</span></a></li>
                                 <li><a class="icon fa-instagram" href="#"  target="_blank"><span class="label">Instagram</span></a></li>
-                                <li><a class="icon fa-dribbble" href="#"  target="_blank"><span class="label">Dribbble</span></a></li>
+                                <li><a class="icon fa-dribbble" href="#"  target="_blank"><span class="label">Dribbble</span></a></li>-->
                                 <li><a class="icon fa-google-plus" href="https://plus.google.com/u/0/112967438506633495744" target="_blank"><span class="label">Google+</span></a></li>
                             </ul>
                         </section>

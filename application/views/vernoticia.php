@@ -122,10 +122,10 @@ echo doctype('html5');
                         <section>
                             <h2 class="major"><span>Contato</span></h2>
                             <ul class="contact">
-                                <li><a class="icon fa-facebook" href="https://www.facebook.com/ca.comp.muz" target="_blank"><span class="label">Facebook</span></a></li>
-                                <li><a class="icon fa-twitter" href="#" target="_blank"><span class="label">Twitter</span></a></li>
-                                <li><a class="icon fa-instagram" href="#" target="_blank"><span class="label">Instagram</span></a></li>
-                                <li><a class="icon fa-dribbble" href="#" target="_blank"><span class="label">Dribbble</span></a></li>
+                                <li><a class="icon fa-facebook" href="https://www.facebook.com/ca.comp.muz"  target="_blank"><span class="label">Facebook</span></a></li>
+<!--                                <li><a class="icon fa-twitter" href="#"  target="_blank"><span class="label">Twitter</span></a></li>
+                                <li><a class="icon fa-instagram" href="#"  target="_blank"><span class="label">Instagram</span></a></li>
+                                <li><a class="icon fa-dribbble" href="#"  target="_blank"><span class="label">Dribbble</span></a></li>-->
                                 <li><a class="icon fa-google-plus" href="https://plus.google.com/u/0/112967438506633495744" target="_blank"><span class="label">Google+</span></a></li>
                             </ul>
                         </section>

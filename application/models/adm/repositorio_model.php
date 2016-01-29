@@ -75,6 +75,67 @@ class Repositorio_model extends CI_Model{
       
         return (bool)$this->db->affected_rows();
     }
+    
+    function get_data($id){
+        $this->db->from($this->tabela);
+        $this->db->join('usuarios', 'usu_id = usuarios_usu_id');
+        $this->db->join('orientadores', 'ori_id = orientadores_ori_id');
+        $this->db->where('rep_id = '.$id);
+        
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->row(0);
+        }else{
+            return FALSE;
+        }
+    }
+    
+    function link($link){
+        $this->db->select('COUNT(rep_link) as cnt');
+        
+        $this->db->from($this->tabela);
+        
+        $this->db->where('rep_link', $link);
+        
+        $result = $this->db->get();
+        
+        $ret = $result->row(0);
+        
+        return (int)$ret->cnt;
+    }
+    
+    function get_by_link($link){
+    
+        $this->db->select('*');
+        
+        $this->db->from($this->tabela);
+        
+        $this->db->where('rep_link', $link);
+        
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->row(0);
+        }else{
+            return FALSE;
+        }
+    }
+    
+    function search($keyword)
+    {
+        $this->db->from($this->tabela);
+        
+        $this->db->like('rep_nome', $keyword);
+        
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->result();
+        }else{
+            return FALSE;
+        }
+    }
       
 }
 

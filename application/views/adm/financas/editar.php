@@ -1,4 +1,8 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
+if($this->session->userdata('grupos') != 1){
+    redirect('adm/financas');
+}
+?>
 
 <div class="col-lg-12">
     <h1 class="page-header">
@@ -42,8 +46,8 @@
 
         <div class="form-group col-lg-3">
             <?php
-            echo form_label('Data');
-            echo form_input('data', (isset($financa->fin_data) ? $financa->fin_data : set_value('data')), 'class="form-control " id="data"');
+            echo form_label('Data *');
+            echo form_input('data', (isset($financa->fin_data) ? $financa->fin_data : set_value('data')), 'class="form-control " id="data" required="TRUE"');
             echo form_error('data');
             ?>
         </div>
@@ -53,15 +57,15 @@
     <div class="row">
         <div class="form-group col-lg-3">
             <?php
-            echo form_label('Tipo');
-            echo form_input('tipo', (isset($financa->fin_tipo) ? $financa->fin_tipo : set_value('tipo')), 'class="form-control tipo " id="tipo"');
+            echo form_label('Tipo *');
+            echo form_input('tipo', (isset($financa->fin_tipo) ? $financa->fin_tipo : set_value('tipo')), 'class="form-control tipo " id="tipo" required="TRUE"');
             ?>
         </div>
 
         <div class="form-group col-lg-3">
             <?php
-            echo form_label('Valor');
-            echo form_input('valor', (isset($financa->fin_valor) ? $financa->fin_valor : set_value('valor')), 'class="form-control valor " id="valor"');
+            echo form_label('Valor *');
+            echo form_input('valor', (isset($financa->fin_valor) ? $financa->fin_valor : set_value('valor')), 'class="form-control valor " id="valor" required="TRUE"');
             ?>
         </div>
 

@@ -94,17 +94,22 @@ echo doctype('html5');
 
                                     <div class="row">
                                         <?php
-                                        if(isset($eventos) && !empty($eventos)):
-                                            foreach ($eventos as $ev):
+                                        
+                                        if(!empty($eventos)):
+                                        
+                                            foreach ($eventos as $n):
                                             ?>
                                             <div class="3u 12u(mobile)">
+
+                                                <!-- Feature -->
                                                 <section class="box feature">
-                                                    <a href="<?php echo base_url('eventos/ver/'.$ev->con_link)?>" class="image featured"><img src="<?php echo base_url($ev->con_imagem);  ?>" alt="" /></a>
-                                                    <h3><a href="<?php echo base_url('eventos/ver/'.$ev->con_link)?>"><?php echo $ev->con_titulo;  ?></a></h3>
+                                                    <a href="<?php echo base_url('eventos/ver/'.$n->con_link)?>" class="image featured"><img src="<?php echo base_url($n->con_imagem);  ?>" alt="" /></a>
+                                                    <h3><a href="<?php echo base_url('eventos/ver/'.$n->con_link)?>"><?php echo $n->con_titulo;  ?></a></h3>
                                                     <p>
-                                                        <?php echo $ev->con_subtitulo;  ?>
+                                                        <?php echo $n->con_subtitulo;  ?>
                                                     </p>
                                                 </section>
+
                                             </div>
                                             <?php
                                             endforeach;
@@ -134,10 +139,10 @@ echo doctype('html5');
                         <section>
                             <h2 class="major"><span>Contato</span></h2>
                             <ul class="contact">
-                                <li><a class="icon fa-facebook" href="https://www.facebook.com/ca.comp.muz" target="_blank"><span class="label">Facebook</span></a></li>
-                                <li><a class="icon fa-twitter" href="#" target="_blank"><span class="label">Twitter</span></a></li>
-                                <li><a class="icon fa-instagram" href="#" target="_blank"><span class="label">Instagram</span></a></li>
-                                <li><a class="icon fa-dribbble" href="#" target="_blank"><span class="label">Dribbble</span></a></li>
+                                <li><a class="icon fa-facebook" href="https://www.facebook.com/ca.comp.muz"  target="_blank"><span class="label">Facebook</span></a></li>
+<!--                                <li><a class="icon fa-twitter" href="#"  target="_blank"><span class="label">Twitter</span></a></li>
+                                <li><a class="icon fa-instagram" href="#"  target="_blank"><span class="label">Instagram</span></a></li>
+                                <li><a class="icon fa-dribbble" href="#"  target="_blank"><span class="label">Dribbble</span></a></li>-->
                                 <li><a class="icon fa-google-plus" href="https://plus.google.com/u/0/112967438506633495744" target="_blank"><span class="label">Google+</span></a></li>
                             </ul>
                         </section>

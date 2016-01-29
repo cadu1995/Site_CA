@@ -181,6 +181,9 @@ Class Financas extends CI_Controller {
     }
 
     function remover($id = NULL) {
+        if($this->session->userdata('grupos') != 1){
+            redirect('adm/financas');
+        }
 
         $resultado = $this->financas_model->remover($id);
 

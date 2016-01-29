@@ -8,7 +8,7 @@ $("#rep_monografia").fileinput({
 });
 
 $("#rep_video").fileinput({
-    allowedFileExtensions: ['avi','mp4','wmv'],
+    allowedFileExtensions: ['avi','mp4','wmv', 'mkv'],
     showPreview: false,
     showUpload: false,
     showRemove: true,
