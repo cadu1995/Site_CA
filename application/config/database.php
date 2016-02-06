@@ -6,7 +6,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'qoakzm';
+$db['default']['password'] = '';
 $db['default']['database'] = 'centro_academico';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
