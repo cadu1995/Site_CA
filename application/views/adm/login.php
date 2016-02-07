@@ -81,7 +81,11 @@ echo doctype('html5');
                                         ?>
                                     </div>
                                     
-                                    <?php echo form_submit('entrar', 'Entrar', 'class="btn btn-lg btn-success btn-block"');?>
+                                    <?php
+                                    $redirect = 'class="btn btn-lg btn-danger" style="width:49% !important;" onclick="location.href=\''.base_url('').'\'"';
+                                    echo form_submit('entrar', 'Entrar', 'class="btn btn-lg btn-success" style="width:49%;"');
+                                    echo nbs(1) . form_button('cancelar','Cancelar', $redirect);
+                                    ?>
                                     
                                 </fieldset>
                             <?php echo form_close();?>

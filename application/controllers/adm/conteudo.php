@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Description of historia
+ *
+ * @author ronieri
+ */
 class Conteudo extends CI_Controller {
 
     public function __construct() {
@@ -20,6 +25,7 @@ class Conteudo extends CI_Controller {
         ));
 
         $this->load->library('form_validation');
+        $this->load->config('conteudo');
         $this->load->helper(array('security', 'date'));
     }
 
@@ -33,7 +39,7 @@ class Conteudo extends CI_Controller {
         $this->load->view('/layout', $dados);
     }
 
-    function criar() {
+    function cadastrar() {
         $dados['tipo_conteudo'] = $this->tipo_conteudo_model->get_all();
         $dados['areas_conhecimento'] = $this->sub_areas_conhecimento_model->get_sub_areas_group_by_areas();
         
@@ -87,7 +93,6 @@ class Conteudo extends CI_Controller {
         $dados['css'][] = 'bootstrap-multiselect';
         $dados['js'][] = 'bootstrap-multiselect';
         $dados['js'][] = 'data/jquery-ui';
-        //$dados['js'][] = 'data/jquery-1.10.2';
         $dados['js'][] = 'plugins/jquery.validate';
         $dados['js'][] = 'upload/fileinput.min';
         $dados['js'][] = 'upload/fileinput.pt-BR';
@@ -101,18 +106,23 @@ class Conteudo extends CI_Controller {
     }
 
     function salvar() {
+        // Busca as regras de validacao nos arquivos de configuracao
+        $regras = $this->config->item('regras_validacao');
+
+        // Seta as regras na library de validacao
+        $this->form_validation->set_rules($regras);
+
+        // Seta o html das mensagens de validacao
+        $this->form_validation->set_error_delimiters('<label class="control-label" for="inputError">', '</label>');
+        
+        $this->load->library('Slug');
         $conteudo = new stdClass();
-        //Pega o título do conteúdo para usar na criação do link e do diretório
-        $titulo = $this->input->post('con_titulo');
-        //Cria o link do conteúdo com base no título
-        $link = $this->slug($titulo);
 
         //Pega o id separado para saber se é edição ou criação
         $id = $this->input->post('con_id');
         
-        $conteudo->con_titulo              = $titulo;
+        $conteudo->con_titulo              = $this->input->post('con_titulo');
         $conteudo->con_subtitulo           = $this->input->post('con_subtitulo');
-        $conteudo->con_link                = $link;
         $conteudo->con_destaque            = $this->input->post('con_destaque');
         $conteudo->con_descricao           = $this->input->post('con_descricao');
         $conteudo->con_data                = $this->input->post('con_data');
@@ -120,67 +130,105 @@ class Conteudo extends CI_Controller {
         $conteudo->tipo_conteudo_tp_con_id = $this->input->post('tipo_conteudo_tp_con_id');
         $conteudo->usuarios_usu_id         = $this->session->userdata('usuario_id');
         $sub_areas                         = $this->input->post('sub_areas');
-        //Arruma a data na forma do banco
-        list($dia, $mes, $ano) = explode('/', $conteudo->con_data);
-        $conteudo->con_data = $ano . $mes . $dia;
         
-//        echo '<pre>';
-//        print_r($conteudo);
-//        die('</pre>');
-        
-        //Se o id for vazio, é criação de conteúdo
-        if (empty($id)) {
-            //Path para o diretório de imagens do conteudo
-            //url-title cria um nome para a pasta do conteúdo, sem caracteres especiais
-            if(!empty($_FILES['con_imagem']['tmp_name'])){
-                $diretorio = 'img/conteudo/' . url_title($conteudo->con_titulo, 'dash', true);
-
-                $conteudo->con_imagem = $this->upload($diretorio);
-            }
-            
-            //Cria o novo conteúdo
-            $resultado = $this->conteudo_model->criar($conteudo);
-            //Verifica se foi(ram) selecionada(s) áreas de conhecimento e as adicionam
-            if ($sub_areas) {
-                $resultado = $this->conteudo_sub_area_model->insert_update_conteudo_areas($sub_areas, $resultado);
-            }
-            
-        } else {
-            //Atualização do conteúdo
-            
-            //Path para o diretório de imagens do conteudo
-            //url-title cria um nome para a pasta do conteúdo, sem caracteres especiais
-            if(!empty($_FILES['con_imagem']['tmp_name'])){
-                $diretorio = 'img/conteudo/' . url_title($conteudo->con_titulo, 'dash', true);
-
-                $conteudo->con_imagem = $this->upload($diretorio);
-            }
-            
+        if ($this->form_validation->run() === FALSE) {
             $conteudo->con_id = $id;
-            $resultado = $this->conteudo_model->atualizar($conteudo);
-            if ($sub_areas) {
-                $resultado = $this->conteudo_sub_area_model->insert_update_conteudo_areas($sub_areas, $id);
-            }
-        }
-        
-        //Verificação
-        if ($resultado) {
 
+            //Carrega as sub-áreas do conteúdo
+            if (is_array($sub_areas)) {
+                foreach ($sub_areas as $s) {
+                    $aux = new stdClass();
+                    $aux->sub_area_id = $s;
+                    $sub[] = $aux;
+                }
+            }
+            $conteudo->sub_areas = $sub;
+
+            $dados['tipo_conteudo'] = $this->tipo_conteudo_model->get_all();
+            $dados['areas_conhecimento'] = $this->sub_areas_conhecimento_model->get_sub_areas_group_by_areas();
+            $dados['conteudo'] = $conteudo;
+
+            $dados['usuario'] = $this->usuario_model->get_by_id($conteudo->usuarios_usu_id);
+
+            //Informações da página, css e js necessários
+            $dados['titulo'] = 'Editar conteúdo';
+            $dados['view'] = 'adm/conteudo/editar';
+            $dados['css'][] = 'jquery-ui.blue';
+            $dados['css'][] = 'fileinput.min';
+            $dados['css'][] = 'bootstrap-switch';
+            $dados['css'][] = 'bootstrap-multiselect';
+            $dados['js'][] = 'bootstrap-multiselect';
+            $dados['js'][] = 'data/jquery-ui';
+            $dados['js'][] = 'plugins/jquery.validate';
+            $dados['js'][] = 'upload/fileinput.min';
+            $dados['js'][] = 'upload/fileinput.pt-BR';
+            $dados['js'][] = 'bootstrap-switch';
+            $dados['js'][] = 'jquery.mask.min';
+            $dados['js'][] = 'tinymce/js/tinymce/tinymce.min';
+            $dados['js'][] = 'tinymce.init.min';
+
+            //Exibe a view
+            $this->load->view('/layout', $dados);
+        }else{
+            //Arruma a data na forma do banco
+            list($dia, $mes, $ano) = explode('/', $conteudo->con_data);
+            $conteudo->con_data = $ano . $mes . $dia;
+
+            //Se o id for vazio, é criação de conteúdo
             if (empty($id)) {
+                //Path para o diretório de imagens do conteudo
+                //url-title cria um nome para a pasta do conteúdo, sem caracteres especiais
+                if(!empty($_FILES['con_imagem']['tmp_name'])){
+                    $diretorio = 'img/conteudo/' . url_title($conteudo->con_titulo, 'dash', true);
 
-                $mensagem = array('msg' => 'insert-con-ok', 'tipo' => 'success');
+                    $conteudo->con_imagem = $this->upload($diretorio);
+                }
+
+                //Cria o novo conteúdo
+                $conteudo->con_link = $this->slug->conteudo($this->input->post('con_titulo'));
+                $resultado = $this->conteudo_model->cadastrar($conteudo);
+                //Verifica se foi(ram) selecionada(s) áreas de conhecimento e as adicionam
+                if ($sub_areas) {
+                    $resultado = $this->conteudo_sub_area_model->insert_update_conteudo_areas($sub_areas, $resultado);
+                }
+
             } else {
+                //Atualização do conteúdo
 
-                $mensagem = array('msg' => 'update-con-ok', 'tipo' => 'info');
+                //Path para o diretório de imagens do conteudo
+                //url-title cria um nome para a pasta do conteúdo, sem caracteres especiais
+                if(!empty($_FILES['con_imagem']['tmp_name'])){
+                    $diretorio = 'img/conteudo/' . url_title($conteudo->con_titulo, 'dash', true);
+
+                    $conteudo->con_imagem = $this->upload($diretorio);
+                }
+                
+                $conteudo->con_id = $id;
+                $resultado = $this->conteudo_model->atualizar($conteudo);
+                if ($sub_areas) {
+                    $resultado = $this->conteudo_sub_area_model->insert_update_conteudo_areas($sub_areas, $id);
+                }
             }
-        } else {
-            $mensagem = array('msg' => 'erro', 'tipo' => 'danger');
-        }
         
-        //Seta flash data para exibir o status da operação
-        $this->session->set_flashdata('msg', $mensagem);
+            //Verificação
+            if ($resultado) {
 
-        redirect('adm/conteudo', 'refresh');
+                if (empty($id)) {
+
+                    $mensagem = array('msg' => 'insert-con-ok', 'tipo' => 'success');
+                } else {
+
+                    $mensagem = array('msg' => 'update-con-ok', 'tipo' => 'info');
+                }
+            } else {
+                $mensagem = array('msg' => 'erro', 'tipo' => 'danger');
+            }
+
+            //Seta flash data para exibir o status da operação
+            $this->session->set_flashdata('msg', $mensagem);
+
+            redirect('adm/conteudo', 'refresh');
+        }
     }
 
     function remover($id = NULL) {
@@ -207,24 +255,6 @@ class Conteudo extends CI_Controller {
         $this->session->set_flashdata('msg', $mensagem);
 
         redirect('adm/conteudo', 'refresh');
-    }
-    
-    
-    
-    private function slug($title){
-        $url = $url1 = url_title($title, '_', TRUE);
-        $cont = 1;
-        if($this->conteudo_model->link($url1) != 0){
-            $url1 = $url.$cont;
-            while($this->conteudo_model->link($url1) != 0){
-                $url1 = $url.$cont;
-                $cont++;
-            }
-            $cont--;
-        }else{
-           return $url; 
-        }
-        return $url.$cont;
     }
     
     private function upload($diretorio){

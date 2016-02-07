@@ -22,6 +22,10 @@ class Minha_conta extends CI_Controller{
         $dados['usuario'] = $this->usuario_model->get_by_id($id); 
         $dados['view']   =  'adm/minha_conta/index';
         $dados['titulo'] = 'Minha Conta';
+        $dados['css'][] = 'jquery-ui.blue';
+        $dados['js'][] = 'data/jquery-ui';
+        $dados['js'][] = 'jquery.mask.min';
+        $dados['js'][]   = 'minha_conta.init';
         
         $this->load->view('/layout',$dados);
     }
@@ -64,7 +68,10 @@ class Minha_conta extends CI_Controller{
             
             $dados['titulo'] = 'Editar usuário';
             $dados['view']   = 'adm/usuarios/editar';
-            $dados['js'][]   = 'pages/editar_usuario';
+            $dados['css'][] = 'jquery-ui.blue';
+            $dados['js'][] = 'data/jquery-ui';
+            $dados['js'][] = 'jquery.mask.min';
+            $dados['js'][]   = 'minha_conta.init';
             
             $this->load->view('/layout',$dados);
         } else {

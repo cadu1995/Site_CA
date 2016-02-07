@@ -21,10 +21,6 @@ class Calendario extends CI_Controller{
             redirect('adm/acesso_negado');
         }
         
-         $this->load->model(array(
-            'adm/calendario_model'
-        ));
-        
         $this->load->library('form_validation');
         $this->load->library('calendar');
         

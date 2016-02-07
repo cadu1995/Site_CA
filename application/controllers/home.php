@@ -12,9 +12,11 @@ class Home extends CI_Controller {
          $conteudo = $this->conteudo_model->get_all_by_date();
          
          $data['slide'] = array();
+         $data['page'] = 'home';
          $data['noticias'] = array();
          $data['eventos'] = array();
-         
+         $data['css'][] = 'custon';
+         $data['css'][] = 'slide/bxslider';
          
          foreach ($conteudo as $c){
              if($c->con_destaque == 1){

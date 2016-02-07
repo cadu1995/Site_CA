@@ -25,8 +25,12 @@ class Usuarios extends CI_Controller{
         
         
         $dados['usuarios'] = $this->usuario_model->get_all();
-        $dados['view']   =  'adm/usuarios/index';
-        $dados['titulo'] = 'Gerenciar usuários';
+        $dados['view']     = 'adm/usuarios/index';
+        $dados['titulo']   = 'Gerenciar usuários';
+        $dados['css'][]    = 'jquery-ui.blue';
+        $dados['js'][]     = 'data/jquery-ui';
+        $dados['js'][]     = 'jquery.mask.min';
+        $dados['js'][]     = 'usu.init';
         
         $this->load->view('/layout',$dados);
     }
@@ -38,8 +42,10 @@ class Usuarios extends CI_Controller{
         $dados['titulo'] = 'Cadastrar usuário';
         $dados['view']   = 'adm/usuarios/editar';
         $dados['js'][]   = 'plugins/jquery.validate';
+        $dados['css'][]  = 'jquery-ui.blue';
+        $dados['js'][]   = 'data/jquery-ui';
         $dados['js'][]   = 'jquery.mask.min';
-        $dados['js'][]   = 'pages/editar_usuario';
+        $dados['js'][]   = 'usu.init';
         
         $this->load->view('/layout',$dados);
         
@@ -56,7 +62,10 @@ class Usuarios extends CI_Controller{
         $dados['view']   = 'adm/usuarios/editar';        
         $dados['js'][]   = 'plugins/jquery.validate';
         $dados['js'][]   = 'jquery.mask.min';
-        $dados['js'][]   = 'pages/editar_usuario';
+        $dados['css'][]  = 'jquery-ui.blue';
+        $dados['js'][]   = 'data/jquery-ui';
+        $dados['js'][]   = 'usu.init';
+        
         
         $this->load->view('/layout',$dados);
     }

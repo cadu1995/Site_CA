@@ -24,3 +24,13 @@ $("#rep_codigo_fonte").fileinput({
     msgValidationError:'Arquivo não suportado...',
     language:'pt-BR'
 });
+
+$(document).ready(function() {
+        $('#sub_areas').multiselect({
+            includeSelectAllOption: true,
+            enableCollapsibleOptGroups: true,
+            buttonWidth: '100%',
+            enableFiltering: true,
+            numberDisplayed: 2
+        });
+    });

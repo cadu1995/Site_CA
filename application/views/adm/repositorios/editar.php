@@ -1,7 +1,6 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-//echo '<pre>';
-//print_r($repositorios);
-//die('</pre>');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 ?>
 
 
@@ -49,13 +48,39 @@
             echo form_error('nome');
             ?>
         </div> 
+        <div class="form-group col-lg-3">
+            <?php
+            echo form_label('Áreas ');
+            $areas_conhecimento = $areas_conhecimento->sub_areas;
+            echo '<select id="sub_areas" name="sub_areas[]" multiple="multiple" class="form-control multiselect-container">';
+            foreach ($areas_conhecimento as $areas) {
+                echo '<optgroup label="' . $areas->are_nome . '">';
+                foreach ($areas->sub_areas as $sub) {
+                    if (!empty($sub_areas)) {
+                        $selected = '';
+                        foreach ($sub_areas as $sa) {
+                            if ($sub->sub_area_id == $sa->areas_conhecimento_are_id) {
+
+                                $selected = 'selected="selected"';
+                            }
+                        }
+                    } else {
+                        $selected = '';
+                    }
+                    echo '<option value="' . $sub->sub_area_id . '" ' . $selected . '>' . $sub->sub_area_titulo . '</option>';
+                }
+            }
+            echo '</select>';
+            echo form_error('sub_areas');
+            ?>
+        </div> 
     </div>
     
     <div class="row">
         <div class="form-group col-lg-6">
             <?php
-            echo form_label('Descrição');
-            echo form_textarea('descricao', (isset($repositorio->rep_descricao)? $repositorio->rep_descricao: set_value('descricao')), 'class="form-control descricao " id="descricao" ');
+            echo form_label('Resumo *');
+            echo form_textarea('descricao', (isset($repositorio->rep_descricao)? $repositorio->rep_descricao: set_value('descricao')), 'class="form-control descricao " id="descricao" required="TRUE"');
             ?>
         </div>
     </div>

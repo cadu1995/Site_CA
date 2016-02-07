@@ -18,6 +18,7 @@ echo doctype('html5');
         
         //Gera as tags HTML
         echo meta($meta);
+        echo '<link rel="icon" href="'.base_url('ca.gif').'" type="image/gif">';
         
         //Carrega os estilos usados na pagina
         echo link_tag(base_url('assets/css/bootstrap.min.css'), 'stylesheet', 'text/css', 'screen');lnbreak();

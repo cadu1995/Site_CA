@@ -34,8 +34,8 @@
     <div class="row">
         <div class="form-group col-lg-6">
             <?php
-            echo form_label('Nome *');
-            echo form_input('nome', (isset($usuario->usu_nome)? $usuario->usu_nome: set_value('nome')), 'id="nome" class="form-control" required="TRUE"');
+            echo form_label('Nome');
+            echo form_input('nome', (isset($usuario->usu_nome)? $usuario->usu_nome: set_value('nome')), 'id="nome" class="form-control" readonly="true" alt="Contate um adm para alterar"');
             echo form_error('nome');
             ?>
         </div> 
@@ -58,8 +58,8 @@
         <div class="form-group col-lg-3">
             <?php 
 
-            echo form_label('Matricula *');
-            echo form_input('matricula',(isset($usuario->usu_matricula)? $usuario->usu_matricula: set_value('matricula')), 'class="form-control " id="matricula"');
+            echo form_label('Matricula');
+            echo form_input('matricula',(isset($usuario->usu_matricula)? $usuario->usu_matricula: set_value('matricula')), 'class="form-control " id="matricula" alt="Contate um adm para alterar" readonly="true"');
             echo form_error('matricula');
             ?>
         </div>
@@ -97,19 +97,6 @@
             ?>
         </div>
         
-    </div>
-    <div class="row">
-        <div class="form-group col-lg-3">
-            <?php 
-
-            echo form_label('Status *');
-
-            $status_usuario = $this->config->item('status_usuario');
-
-            echo form_dropdown('status',$status_usuario,(isset($usuario->usu_status)? $usuario->usu_status: set_value('status')),'class="form-control"');
-            echo form_error('status');
-            ?>
-        </div>
     </div>
     <div class="row">
         

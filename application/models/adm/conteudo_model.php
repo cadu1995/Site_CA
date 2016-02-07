@@ -45,7 +45,7 @@ class Conteudo_model extends CI_Model {
         }
     }
     
-    function criar($conteudo){
+    function cadastrar($conteudo){
         
         $this->db->insert($this->tabela, $conteudo);
         
@@ -231,12 +231,12 @@ class Conteudo_model extends CI_Model {
     
     function search($keyword, $id)
     {
-        $this->db->from($this->tabela);
-        
-        $this->db->like('con_titulo', $keyword);
-        
-        $this->db->where('tipo_conteudo_tp_con_id', $id);
-        
+        $Nkeyword = $this->db->escape('%'.$keyword.'%');
+        $Nid = $this->db->escape($id);
+        $this->db->select('*')->from($this->tabela)->where("tipo_conteudo_tp_con_id = $Nid"
+                . " and (con_titulo LIKE $Nkeyword or con_subtitulo LIKE $Nkeyword or"
+                . " con_descricao LIKE $Nkeyword)")->order_by('con_data_registro', 'desc');
+
         $result = $this->db->get();
         
         if($result->num_rows() > 0){
@@ -246,30 +246,49 @@ class Conteudo_model extends CI_Model {
         }
     }
     
-    public function noticias_areas($area){
-        
-    $this->load->model('adm/areas_conhecimento_model');
-    $areas = $this->areas_conhecimento_model->get_all();
+    public function noticias_areas($area) {
 
-    foreach($areas as $area){
-        $aux = new stdClass();
-        $aux->are_id = $area->are_id;
-        $aux->are_nome = $area->are_nome;
-        $aux->are_numero = $area->are_numero;
+        $this->load->model('adm/areas_conhecimento_model');
+        $areas = $this->areas_conhecimento_model->get_all();
 
-        $this->db->select('sub_area_id, sub_area_titulo, sub_area_numero');
-        $this->db->from($this->tabela);
-        $this->db->join('areas_conhecimento', 'are_id = areas_conhecimento_are_id');
-        $this->db->where('areas_conhecimento_are_id = '.$area->are_id);
+        foreach ($areas as $area) {
+            $aux = new stdClass();
+            $aux->are_id = $area->are_id;
+            $aux->are_nome = $area->are_nome;
+            $aux->are_numero = $area->are_numero;
 
-        $result = $this->db->get();
+            $this->db->select('sub_area_id, sub_area_titulo, sub_area_numero');
+            $this->db->from($this->tabela);
+            $this->db->join('areas_conhecimento', 'are_id = areas_conhecimento_are_id');
+            $this->db->where('areas_conhecimento_are_id = ' . $area->are_id);
 
-        $aux->sub_areas = $result->result();
+            $result = $this->db->get();
 
-        $retorno->sub_areas[] = $aux;
-    }
+            $aux->sub_areas = $result->result();
 
-    return $retorno;
+            $retorno->sub_areas[] = $aux;
+        }
+
+        return $retorno;
     }
     
+    function search_by_area($number, $id){
+        
+        $this->db->select('con_id, con_titulo, con_subtitulo, con_link, con_imagem')->from($this->tabela)->
+                join('conteudo_sub_area', 'con_id = conteudo_id')->
+                join('sub_areas_conhecimento', 'sub_areas_conhecimento.sub_area_id = conteudo_sub_area.sub_area_id')->
+                join('areas_conhecimento', 'areas_conhecimento_are_id = are_id')->
+                where('are_numero', $number)->
+                where('tipo_conteudo_tp_con_id', $id)->
+                group_by('con_id')->order_by('con_data_registro', 'desc');
+
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->result();
+        }else{
+            return FALSE;
+        }
+    }
+
 }

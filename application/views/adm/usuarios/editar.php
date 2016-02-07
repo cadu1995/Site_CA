@@ -51,7 +51,7 @@
         <div class="form-group col-lg-6">
             <?php 
             echo form_label('E-mail *');
-            echo form_input('email',(isset($usuario->usu_email)? $usuario->usu_email: set_value('email')), 'class="form-control " id="email"');
+            echo form_input('email',(isset($usuario->usu_email)? $usuario->usu_email: set_value('email')), 'class="form-control " id="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" required="TRUE" title="example@example.com"');
             echo form_error('email');
             ?>
         </div>
@@ -59,7 +59,7 @@
             <?php 
 
             echo form_label('Matricula *');
-            echo form_input('matricula',(isset($usuario->usu_matricula)? $usuario->usu_matricula: set_value('matricula')), 'class="form-control " id="matricula"');
+            echo form_input('matricula',(isset($usuario->usu_matricula)? $usuario->usu_matricula: set_value('matricula')), 'class="form-control " id="matricula" pattern="[0-9]{8,}" required="TRUE" title="Matrícula inválida."');
             echo form_error('matricula');
             ?>
         </div>
@@ -71,7 +71,7 @@
             <?php 
 
             echo form_label('Senha');
-            echo form_password('senha','', ' id="senha" class="form-control "');
+            echo form_password('senha','', ' id="senha" class="form-control " pattern=".{6,}" title="No mínimo seis caracteres."');
             echo form_error('senha');
             ?>
         </div>

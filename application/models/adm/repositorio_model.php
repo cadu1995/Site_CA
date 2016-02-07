@@ -49,7 +49,7 @@ class Repositorio_model extends CI_Model{
         
         $this->db->insert($this->tabela, $repositorio);
         
-        $inseriu_repositorio = (bool)  $this->db->affected_rows();
+        $inseriu_repositorio = (int)  $this->db->insert_id();
        
         return($inseriu_repositorio);
     }
@@ -91,20 +91,6 @@ class Repositorio_model extends CI_Model{
         }
     }
     
-    function link($link){
-        $this->db->select('COUNT(rep_link) as cnt');
-        
-        $this->db->from($this->tabela);
-        
-        $this->db->where('rep_link', $link);
-        
-        $result = $this->db->get();
-        
-        $ret = $result->row(0);
-        
-        return (int)$ret->cnt;
-    }
-    
     function get_by_link($link){
     
         $this->db->select('*');
@@ -127,6 +113,9 @@ class Repositorio_model extends CI_Model{
         $this->db->from($this->tabela);
         
         $this->db->like('rep_nome', $keyword);
+        $this->db->or_like('rep_descricao', $keyword);
+        $this->db->or_like('rep_autor', $keyword);
+        $this->db->order_by('rep_data', 'desc');
         
         $result = $this->db->get();
         
@@ -136,6 +125,23 @@ class Repositorio_model extends CI_Model{
             return FALSE;
         }
     }
-      
+    
+    function search_by_area($number){
+        
+        $this->db->select('rep_id, rep_nome, rep_descricao, rep_link')->from($this->tabela)->
+                join('repositorio_areas', 'repositorios_rep_id = rep_id')->
+                join('sub_areas_conhecimento', 'sub_area_id = repositorio_areas.areas_conhecimento_are_id')->
+                join('areas_conhecimento', 'repositorio_areas.areas_conhecimento_are_id = areas_conhecimento.are_id')->
+                where('are_numero', $number)->
+                group_by('rep_id')->order_by('rep_data', 'desc');
+
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->result();
+        }else{
+            return FALSE;
+        }
+    }
 }
 

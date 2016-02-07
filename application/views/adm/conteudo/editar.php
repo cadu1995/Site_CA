@@ -1,4 +1,7 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');?>
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
+?>
 
 <div class="col-lg-12">
     <h1 class="page-header">
@@ -75,17 +78,17 @@
                         echo br(1);
             if(isset($conteudo)){
                 if($conteudo->con_destaque == 1){
-                    $checked = true;
+                    $checked = TRUE;
                 }else {
-                    $checked = false;
+                    $checked = FALSE;
                 }
             }else{
-                $checked = false;
+                $checked = FALSE;
             }
             
             echo form_label('Destaque &nbsp');
 
-            echo form_checkbox('con_destaque', '',$checked);
+            echo form_checkbox('con_destaque', '1', $checked);
             echo form_error('con_destaque');
             ?>
         </div>
@@ -111,47 +114,40 @@
     </div>
     <div class="row">
         <?php
-            if(!isset($conteudo->con_imagem))
-            {
-                echo '<div class="form-group col-lg-6 ">';
-                echo form_label('Imagem');
-                echo '<input type="file" name="con_imagem" id="con_imagem" value="" >
+                    if (!isset($conteudo->con_imagem)) {
+            echo '<div class="form-group col-lg-6 ">';
+            echo form_label('Imagem');
+            echo '<input type="file" name="con_imagem" id="con_imagem" value="" >
                 </div>
                 ';
-                echo '<div class="form-group col-lg-3">';
-            }
-            else{
-                echo '<div class="form-group col-lg-6">';
-            }
-            ?>
-        
-            <?php
-            
-            
-            echo form_label('Área ');
-            $areas_conhecimento = $areas_conhecimento->sub_areas;
-
-            echo '<select id="sub_areas" name="sub_areas[]" multiple="multiple" class="form-control multiselect-container">';
-            foreach($areas_conhecimento as $areas){
-                echo '<optgroup label="'.$areas->are_nome.'">';
-                foreach($areas->sub_areas as $sub){
-                    if (!empty($conteudo->sub_areas)) {
-            $selected = '';
-            foreach ($conteudo->sub_areas as $csa) {
-                if ($sub->sub_area_id == $csa->sub_area_id) {
-
-                    $selected = 'selected="selected"';
-                }
-            }
+            echo '<div class="form-group col-lg-3">';
         } else {
-            $selected = '';
+            echo '<div class="form-group col-lg-6">';
         }
-        echo '<option value="'.$sub->sub_area_id.'" '.$selected.'>'.$sub->sub_area_titulo.'</option>';
+        echo form_label('Áreas ');
+        $areas_conhecimento = $areas_conhecimento->sub_areas;
+
+        echo '<select id="sub_areas" name="sub_areas[]" multiple="multiple" class="form-control multiselect-container">';
+        foreach ($areas_conhecimento as $areas) {
+            echo '<optgroup label="' . $areas->are_nome . '">';
+            foreach ($areas->sub_areas as $sub) {
+                if (!empty($conteudo->sub_areas)) {
+                    $selected = '';
+                    foreach ($conteudo->sub_areas as $csa) {
+                        if ($sub->sub_area_id == $csa->sub_area_id) {
+
+                            $selected = 'selected="selected"';
+                        }
+                    }
+                } else {
+                    $selected = '';
                 }
+                echo '<option value="' . $sub->sub_area_id . '" ' . $selected . '>' . $sub->sub_area_titulo . '</option>';
             }
-            echo '</select>';
-            echo form_error('sub_areas');
-            ?>
+        }
+        echo '</select>';
+        echo form_error('sub_areas');
+        ?>
         </div>
     </div>
     

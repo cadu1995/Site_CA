@@ -23,4 +23,18 @@ class Areas_conhecimento_model extends CI_Model {
         }
         
     }
+    
+    function get_by_number($number){
+        
+        $this->db->select('are_nome')->from($this->tabela)->where('are_numero', $number);
+        
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            return $result->row(0);
+        }else{
+            return FALSE;
+        }
+        
+    }
 }

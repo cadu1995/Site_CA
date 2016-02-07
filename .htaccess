@@ -5,3 +5,4 @@
     ReWriteCond $1 !^(index\.php|images|robots\.txt)
     ReWriteRule ^(.*)$ index.php/$0 [L]
 </IfModule>
+

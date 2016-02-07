@@ -33,10 +33,10 @@
                     $link_editar  = base_url('adm/repositorios/editar/' . $r->rep_id);
 
                     $acoes  = '<a href="' . $link_editar . '" class="btn btn-info btn-sm">Editar</a>&nbsp;';
-                    $acoes .= '<a href="#" data-id="' . $r->rep_id . '" data-toggle="modal" data-target="#modal_confirmar_remocao" class="btn btn-danger btn-sm btn_remover">Remover</a>';
+                    $acoes .= '<a href="' . base_url('adm/repositorios/remover/'.$r->rep_id) . '" class="btn btn-danger btn-sm btn_remover">Remover</a>';
 
                     $this->table->add_row(
-                            $r->rep_id, $r->rep_nome, $r->rep_descricao, $acoes
+                            $r->rep_id, $r->rep_nome, word_limiter($r->rep_descricao, 8), $acoes
                     );
                 }
             }
@@ -62,7 +62,7 @@
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn btn-default" data-dismiss="modal">Não</a>
-                <a href="<?php echo base_url('adm/repositorios/remover/'); ?>" id="confirma_remocao" class="btn btn-primary">Sim</a>
+                <a href="<?php echo base_url(''); ?>" id="confirma_remocao" class="btn btn-primary">Sim</a>
             </div>
         </div>
     </div>

@@ -19,7 +19,7 @@
 <div class="row col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <a class="btn btn-primary" href="<?php echo base_url('adm/conteudo/criar'); ?>">Criar</a>
+            <a class="btn btn-primary" href="<?php echo base_url('adm/conteudo/cadastrar'); ?>">Cadastrar</a>
         </div> 
         <div class="panel-body">
 
@@ -57,7 +57,6 @@
                     $link_editar  = base_url('adm/conteudo/editar/' . $conte->con_id);
 
                     $acoes  = '<a href="' . $link_editar . '" class="btn btn-info btn-sm">Editar</a>&nbsp;';
-                    //$acoes .= '<a href="#" data-id="' . $conte->con_id . '" data-toggle="modal" data-target="#modal_confirmar_remocao" class="btn btn-danger btn-sm btn_remover">Remover</a>';
                     $acoes .= '<a href="' . base_url('adm/conteudo/remover/'.$conte->con_id) . '" class="btn btn-danger btn-sm btn_remover">Remover</a>';
 
                     $this->table->add_row(

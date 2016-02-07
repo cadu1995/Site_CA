@@ -34,8 +34,8 @@
                 $link_editar  = base_url('adm/categorias/editar/' . $u->tp_con_id);
                 
                 $acoes  = '<a href="' . $link_editar . '" class="btn btn-info btn-sm">Editar</a>&nbsp;';
-//                $acoes .= '<a href="#" data-id="' . $u->cate_id . '" data-toggle="modal" data-target="#modal_confirmar_remocao" class="btn btn-danger btn-sm btn_remover">Remover</a>';
-                $acoes .= '<a class="btn btn-danger btn-sm" href="javascript:func()" onclick="conf_excluir('.$u->tp_con_id.')">Remover</a>';
+//                $acoes .= '<a class="btn btn-danger btn-sm" href="javascript:func()" onclick="conf_excluir('.$u->tp_con_id.')">Remover</a>';
+                $acoes .= '<a href="' . base_url('adm/categorias/remover/'.$u->tp_con_id) . '" class="btn btn-danger btn-sm btn_remover">Remover</a>';
                 
                 $this->table->add_row(
                         $u->tp_con_id, $u->tp_con_titulo, $acoes
