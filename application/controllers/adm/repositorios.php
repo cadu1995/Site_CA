@@ -47,7 +47,13 @@ class Repositorios extends CI_Controller {
     }
 
     function editar($id = NULL) {
+        if($id == NULL){
+            redirect('adm/repositorios', 'refresh');
+        }
         $dados['repositorio'] = $this->repositorio_model->get_by_id($id);
+        if(empty($dados['repositorio'])){
+            redirect('adm/repositorios', 'refresh');
+        }
         $dados['orientadores'] = $this->orientador_model->get_all();
         $dados['areas_conhecimento'] = $this->sub_areas_conhecimento_model->get_sub_areas_group_by_areas();
         $dados['sub_areas'] = $this->repositorio_areas_model->get_sub_areas_by_repositorio_id($id);

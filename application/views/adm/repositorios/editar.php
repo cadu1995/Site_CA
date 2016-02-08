@@ -10,10 +10,10 @@
     </h1>
     <ol class="breadcrumb">
         <li>
-            <i class="fa fa-dashboard"></i>  <a href="repositorios">Repositórios</a>
+            <i class="fa fa-database"></i>  <a href="<?php echo base_url('adm/repositorios');?>">Repositórios</a>
         </li>
         <li class="active">
-            <i class="fa fa-file"></i> <?php echo $titulo;?>
+            <i class="fa fa-edit"></i> <?php echo $titulo;?>
         </li>
     </ol>
     

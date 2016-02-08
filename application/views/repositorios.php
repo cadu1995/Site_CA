@@ -37,8 +37,11 @@ $this->load->view('front/top');
                                         <?php
                                         
                                         if(isset($repositorios) && !empty($repositorios)):
-                                        
+                                            $cont = 0;
                                             foreach ($repositorios as $n):
+                                                if($cont % 4 == 0){
+                                                    echo '<div class="row">';
+                                                }
                                             ?>
 
 
@@ -54,6 +57,10 @@ $this->load->view('front/top');
 
                                             </div>
                                             <?php
+                                                if($cont % 4 == 3){
+                                                    echo '</div>';
+                                                }
+                                                $cont++;
                                             endforeach;
                                         else:
                                             echo '<p>Não há resultados para exibir.</p>';

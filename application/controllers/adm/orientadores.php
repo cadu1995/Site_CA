@@ -39,9 +39,16 @@ class Orientadores extends CI_Controller{
     
     
     function editar($id = NULL){
+        
+        if($id == NULL){
+            redirect('adm/orientadores', 'refresh');
+        }
           
         $dados['orientador'] = $this->orientador_model->get_by_id($id);
         
+        if(empty($dados['orientador'])){
+            redirect('adm/orientadores', 'refresh');
+        }
         $dados['titulo'] = 'Editar orientador';
         $dados['view']   = 'adm/orientadores/editar';        
         $dados['js'][]   = 'plugins/jquery.validate';

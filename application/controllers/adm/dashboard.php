@@ -35,7 +35,7 @@ class Dashboard extends CI_Controller{
         }
         $data = array('label' => 'Acessos', 'data' => $aux);
         header('Content-Type: application/json');
-        echo json_encode( $data );
+        print_r(json_encode( $data ));
     }
     
    

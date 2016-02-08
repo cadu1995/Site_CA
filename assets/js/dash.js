@@ -19,6 +19,9 @@ $(function () {
             hoverable: true,
             clickable: true
         },
+        yaxis:{
+            tickDecimals: 0
+        },
         xaxis: {
             mode: "categories",
             tickLength: 0

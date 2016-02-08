@@ -35,8 +35,13 @@ $this->load->view('front/top');
                                         <?php
                                         
                                         if(!empty($eventos)):
-                                        
+                                            
+                                            $cont = 0;
+                                            
                                             foreach ($eventos as $n):
+                                                if($cont % 4 == 0){
+                                                    echo '<div class="row">';
+                                                }
                                             ?>
                                             <div class="3u 12u(mobile)">
 
@@ -45,12 +50,16 @@ $this->load->view('front/top');
                                                     <a href="<?php echo base_url('eventos/ver/'.$n->con_link)?>" class="image featured"><img src="<?php echo base_url($n->con_imagem);  ?>" alt="" /></a>
                                                     <h3><a href="<?php echo base_url('eventos/ver/'.$n->con_link)?>"><?php echo $n->con_titulo;  ?></a></h3>
                                                     <p>
-                                                        <?php echo word_limiter($n->con_subtitulo, 10);  ?>
+                                                        <?php echo word_limiter($n->con_subtitulo, 10); ?>
                                                     </p>
                                                 </section>
 
                                             </div>
                                             <?php
+                                                if($cont % 4 == 3){
+                                                    echo '</div>';
+                                                }
+                                                $cont++;
                                             endforeach;
                                         else:
                                             echo '<p>Não há eventos para exibir.</p>';

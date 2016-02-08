@@ -2,14 +2,11 @@
 
 <div class="col-lg-12">
     <h1 class="page-header">
-       Usuários
+       <?php echo $titulo;?>
     </h1>
     <ol class="breadcrumb">
         <li>
-            <i class="fa fa-dashboard"></i>  <a href="usuarios">Usuários</a>
-        </li>
-        <li class="active">
-            <i class="fa fa-file"></i> <?php echo $titulo;?>
+            <i class="fa fa-user"></i>  <a href="<?php echo base_url('adm/minha_conta');?>"><?php echo $titulo;?></a>
         </li>
     </ol>
     

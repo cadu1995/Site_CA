@@ -70,7 +70,9 @@ class Conteudo extends CI_Controller {
         
         //Pega todo o conteúdo
         $conteudo = $this->conteudo_model->get_by_id($id);
-        
+        if (empty($conteudo)) {
+            redirect('adm/conteudo', 'refresh');
+        }
         //Modifica a exibição das datas
         list($ano, $mes, $dia) = explode('-', $conteudo->con_data);
         $conteudo->con_data = $dia . $mes . $ano;

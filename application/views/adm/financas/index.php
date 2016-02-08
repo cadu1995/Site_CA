@@ -7,15 +7,15 @@
     </h1>
     <ol class="breadcrumb">
         <li>
-            <i class="fa fa-dashboard"></i>  <a href="financas">Finanças</a>
+            <i class="fa fa-university"></i>  <a href="<?php echo base_url('adm/financas');?>">Finanças</a>
         </li>
         <li class="active">
-            <i class="fa fa-file"></i> <?php echo $titulo = 'Gerenciar Finanças';?>
+            <i class="fa fa-pencil"></i> <?php echo $titulo = 'Gerenciar Finanças';?>
         </li>
     </ol>
     
 </div>
-<div class="row col-lg-12">
+<div class="col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading">
             <?php if($this->session->userdata('grupos') == 1): ?>

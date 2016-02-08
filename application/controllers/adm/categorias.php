@@ -41,8 +41,15 @@ class Categorias extends CI_Controller{
     }
     
     function editar($id = NULL){
+        
+        if ($id === \NULL) {
+            redirect('adm/categorias', 'refresh');
+        }
      
-        $dados['categoria'] = $this->categoria_model->get_by_id($id);        
+        $dados['categoria'] = $this->categoria_model->get_by_id($id);
+        if(empty($dados['categoria'])){
+            redirect('adm/categorias', 'refresh');
+        }
         $dados['titulo'] = 'Editar categoria';
         $dados['view']   = 'adm/categorias/editar';        
         $dados['js'][]   = 'plugins/jquery.validate';

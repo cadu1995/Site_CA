@@ -53,6 +53,9 @@ class Repositorios extends CI_Controller{
     }
     
     public function ver($link){
+        if ($link === \NULL) {
+            redirect('repositorios', 'refresh');
+        }
         $repositorio = $this->repositorio_model->get_by_link($link);
         
         $r = $this->repositorio_model->get_data($repositorio->rep_id);
@@ -79,7 +82,7 @@ class Repositorios extends CI_Controller{
     
     public function pesquisa($number = NULL){
         
-        $keyword = $this->input->post('search');
+        $keyword = htmlentities($this->input->post('search'), ENT_QUOTES, 'UTF-8');
 
         if (!empty($keyword)) {
             $repositorios = $this->repositorio_model->search($keyword);

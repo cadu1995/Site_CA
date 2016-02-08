@@ -10,10 +10,10 @@ if($this->session->userdata('grupos') != 1){
     </h1>
     <ol class="breadcrumb">
         <li>
-            <i class="fa fa-dashboard"></i>  <a href="financas">Finanças</a>
+            <i class="fa fa-university"></i>  <a href="<?php echo base_url('adm/financas');?>">Finanças</a>
         </li>
         <li class="active">
-            <i class="fa fa-file"></i> <?php echo $titulo; ?>
+            <i class="fa fa-edit"></i> <?php echo $titulo; ?>
         </li>
     </ol>
 

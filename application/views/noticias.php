@@ -37,8 +37,11 @@ $this->load->view('front/top');
                                         <?php
                                         
                                         if(!empty($noticias)):
-                                        
+                                            $cont = 0;
                                             foreach ($noticias as $n):
+                                                if($cont % 4 == 0){
+                                                    echo '<div class="row">';
+                                                }
                                             ?>
 
 
@@ -55,6 +58,10 @@ $this->load->view('front/top');
 
                                             </div>
                                             <?php
+                                                if($cont % 4 == 3){
+                                                    echo '</div>';
+                                                }
+                                                $cont++;
                                             endforeach;
                                         else:
                                             echo '<p>Não há notícias para exibir.</p>';

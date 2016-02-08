@@ -32,8 +32,9 @@ if (!defined('BASEPATH')) {
             }
         }
         ?>
+        <title>Centro Acadêmico Alan Turing</title>
     </head>
-    <title>Centro Acadêmico Alan Turing</title>
+    
     <body class="homepage">
         <div id="page-wrapper">
             <!-- Nav -->

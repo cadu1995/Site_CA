@@ -6,10 +6,10 @@
     </h1>
     <ol class="breadcrumb">
         <li>
-            <i class="fa fa-dashboard"></i>  <a href="orientadores">Orientadores</a>
+            <i class="fa fa-graduation-cap"></i>  <a href="<?php echo base_url('adm/orientadores');?>">Orientadores</a>
         </li>
         <li class="active">
-            <i class="fa fa-file"></i> <?php echo $titulo;?>
+            <i class="fa fa-edit"></i> <?php echo $titulo;?>
         </li>
     </ol>
     

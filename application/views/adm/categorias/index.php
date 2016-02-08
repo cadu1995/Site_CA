@@ -7,15 +7,15 @@
     </h1>
     <ol class="breadcrumb">
         <li>
-            <i class="fa fa-dashboard"></i>  <a href="categorias">Categorias</a>
+            <i class="fa fa-university"></i>  <a href="<?php echo base_url('adm/categorias');?>">Categorias</a>
         </li>
         <li class="active">
-            <i class="fa fa-file"></i> <?php echo $titulo = 'Gerenciar Categorias';?>
+            <i class="fa fa-pencil"></i> <?php echo $titulo = 'Gerenciar Categorias';?>
         </li>
     </ol>
     
 </div>
-<div class="row col-lg-12">
+<div class="col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading">
             <a class="btn btn-primary" href="<?php echo base_url('adm/categorias/cadastrar'); ?>">Cadastrar</a>

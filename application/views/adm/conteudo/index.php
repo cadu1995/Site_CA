@@ -8,15 +8,15 @@
     </h1>
     <ol class="breadcrumb">
         <li>
-            <i class="fa fa-dashboard"></i>  <a href="conteudo">Conteúdo</a>
+            <i class="fa fa-file-text"></i>  <a href="<?php echo base_url('adm/conteudo');?>">Conteúdo</a>
         </li>
         <li class="active">
-            <i class="fa fa-file"></i> <?php echo $titulo;?>
+            <i class="fa fa-pencil"></i> <?php echo $titulo;?>
         </li>
     </ol>
     
 </div>
-<div class="row col-lg-12">
+<div class="col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading">
             <a class="btn btn-primary" href="<?php echo base_url('adm/conteudo/cadastrar'); ?>">Cadastrar</a>

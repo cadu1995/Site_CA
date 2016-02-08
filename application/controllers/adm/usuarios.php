@@ -53,9 +53,14 @@ class Usuarios extends CI_Controller{
     
     function editar($id = NULL){
         
+        if($id == NULL){
+            redirect('adm/usuarios', 'refresh');
+        }
         
-        
-        $dados['usuario'] = $this->usuario_model->get_by_id($id);        
+        $dados['usuario'] = $this->usuario_model->get_by_id($id);
+        if(empty($dados['usuario'])){
+            redirect('adm/usuarios', 'refresh');
+        }        
         $dados['grupos']  = $this->grupo_model->get_all();
         
         $dados['titulo'] = 'Editar usuário';

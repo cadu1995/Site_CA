@@ -50,8 +50,15 @@ Class Financas extends CI_Controller {
     }
 
     function editar($id = NULL) {
+        
+        if($id == NULL){
+            redirect('adm/financas', 'refresh');
+        }
 
         $financa = $this->financas_model->get_by_id($id);
+        if(empty($financa)){
+            redirect('adm/financas', 'refresh');
+        }
         list($ano, $mes, $dia) = explode('-', $financa->fin_data);
 
         if (strpos($financa->fin_valor, '.') !== FALSE){

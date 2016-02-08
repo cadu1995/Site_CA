@@ -48,7 +48,7 @@ class Eventos extends CI_Controller{
     
     public function pesquisa($number = NULL){
         
-        $keyword = $this->input->post('search');
+        $keyword = htmlentities($this->input->post('search'), ENT_QUOTES, 'UTF-8');
         
         if (!empty($keyword)) {
             $data['page'] = 'eventos';
