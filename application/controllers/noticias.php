@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Description of historia
+ *
+ * @author ronieri
+ */
+
 class Noticias extends CI_Controller{
     
     public function __construct() {

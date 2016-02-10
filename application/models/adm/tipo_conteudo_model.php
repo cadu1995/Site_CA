@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Description of historia
+ *
+ * @author ronieri
+ */
+
 class Tipo_conteudo_model extends CI_Model {
     
     private $tabela;

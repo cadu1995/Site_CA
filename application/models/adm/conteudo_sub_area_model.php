@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Description of historia
+ *
+ * @author ronieri
+ */
+
 class Conteudo_sub_area_model extends CI_Model {
     
     private $tabela;
