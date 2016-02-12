@@ -67,7 +67,7 @@ class Eventos extends CI_Controller{
         }elseif($number != NULL){
             $data['page'] = 'eventos';
             $data['eventos'] = $this->conteudo_model->search_by_area($number, 2);
-            $data['titulo'] = 'Pesquisa';
+            $data['titulo'] = 'Áreas';
             $data['nome_area'] = $this->areas_conhecimento_model->get_by_number($number);
             $data['areas'] = $this->areas_conhecimento_model->get_all();
             $data['destaques'] = $this->conteudo_model->get_eventos_destaque();

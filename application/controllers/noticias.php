@@ -67,7 +67,7 @@ class Noticias extends CI_Controller{
         }elseif ($number != NULL) {
             $data['page'] = 'noticias';
             $data['noticias'] = $this->conteudo_model->search_by_area($number, 1);
-            $data['titulo'] = 'Pesquisa';
+            $data['titulo'] = 'Áreas';
             $data['areas'] = $this->areas_conhecimento_model->get_all();
             $data['nome_area'] = $this->areas_conhecimento_model->get_by_number($number);
             $data['destaques'] = $this->conteudo_model->get_noticias_destaque();

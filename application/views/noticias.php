@@ -25,7 +25,7 @@ $this->load->view('front/top');
                                         <?php 
                                         if($titulo == 'Pesquisa' && isset($keyword)){
                                             echo '<p>Resultados para "'.$keyword.'".</p>';
-                                        }elseif($titulo == 'Pesquisa' && isset($nome_area)){
+                                        }elseif($titulo == 'Áreas' && isset($nome_area)){
                                             echo '<p>Notícias em "'.$nome_area->are_nome.'".</p>';
                                         }
                                         ?>
